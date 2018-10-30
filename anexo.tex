@@ -1,0 +1,91 @@
+\section{Anexo}
+
+\paragraph{Propiedad 1}
+ Dada una colección $a_i,b_i$ tal que $0\leq a_i\leq 1$ y $0 \leq b_i \leq 1$, $\forall \ i = \{1, ... \ , N\}$ 
+\begin{equation}
+    P(N) : \abs{\prod_{i=1}^N a_i - \prod_{i=1}^N b_i} \leq \sum_{i=1}^N \abs{a_i - b_i}
+\end{equation}
+
+Esta propiedad puede demostrarse por el principio de inducción.
+
+i) $P(2)$
+\begin{equation}
+   \abs{a_1 a_2 - b_1 b_2 } \leq \abs{a_1 - b_1} + \abs{a_2 - b_2}
+\end{equation}
+Primero sumamos y restamos el término $a_2 b_1$ y luego sacamos factor común según:
+\begin{equation*}
+    \abs{a_1 a_2 - b_1 b_2} = \abs{a_1 a_2 - a_2 b_1 - b_1 b_2 + a_2 b_1} =  \abs{a_2 (a_1-b_1) + b_1 (a_2-b_2)} 
+\end{equation*}
+luego aplicamos la desigualdad triangular teniendo en cuenta además que $\abs{a_i}\leq 1$ y $\abs{b_i} \leq 1$
+\begin{equation}
+    \abs{a_1 a_2 - b_1 b_2} \leq \abs{a_2} \abs{a_1-b_1}+\abs{b_1}\abs{a_2-b_2} \leq \abs{a_1-b_1}+\abs{a_2-b_2}
+\end{equation}
+
+ii) $P(n) \Rightarrow P(n+1)$
+\begin{equation}
+    \abs{\prod_{i=1}^{N+1} a_i -\prod_{i=1}^{N+1} b_i  }  =  \abs{a_{N+1} \prod_{i=1}^{N} a_i - b_{N+1} \prod_{i=1}^{N} b_i } 
+\end{equation}
+Aplicando $P(2)$
+\begin{equation}
+\abs{\prod_{i=1}^{N+1} a_i -\prod_{i=1}^{N+1} b_i  }  \leq \abs{a_{N+1}-b_{N+1}} + \abs{\prod_{i=1}^{N} a_i - \prod_{i=1}^{N} b_i} 
+\end{equation}
+Considerando que $P(n)$ se cumple por hipótesis
+\begin{equation}
+\abs{\prod_{i=1}^{N+1} a_i -\prod_{i=1}^{N+1} b_i  }  \leq \abs{a_{N+1}-b_{N+1}} + \abs{\sum_{i=1}^{N} \abs{a_i - b_i}} =  \abs{\sum_{i=1}^{N+1} \abs{a_i - b_i}}
+\end{equation}
+
+
+
+
+
+
+
+
+
+
+\paragraph{Propiedad 2} El desarrollo en serie de Taylor, de $\sqrt{1-x}$ cuando $0 \leq x \leq 1$ es:
+\begin{equation}
+    \sqrt{1-x}= 1-\sum_{n=1}^{+\infty} f_n \cdot x^n \quad \text{con} \quad f_n = \frac{(2n)!}{(n!)^2 (2n-1) 4^n} \geq 0
+    \label{eqn:taylorraiz}
+\end{equation}
+
+Esta propiedad se deduce de aplicar la fórmula del cálculo de coeficientes para el desarrollo de Serie de Taylor.
+
+\begin{equation*}
+    f(x) = f(x_0) + \sum_{n=1}^{+\infty} \frac{f^{(n)}(x_0)}{n!} \cdot (x-x_0)^n
+\end{equation*}
+
+Calculamos las derivadas n-ésimas para evaluarlas luego en $x=0^+$
+\begin{align*}
+    &f(x) = (1-x)^{1/2}\\
+    &f'(x) = \frac{1}{2} (-1) (1-x)^{-1/2} = - \frac{1}{2}\\
+    &f''(x) = \frac{1}{2} (-1) (-\frac{1}{2})(-1) (1-x)^{-3/2} = -\frac{1}{2} \frac{1}{2} (1-x)^{-3/2} \\
+    &f'''(x) = -\frac{1}{2} \frac{1}{2} \frac{3}{2} (1-x)^{-5/2} \\
+    &f^{(iv)}(x) = -\frac{1}{2} \frac{1}{2} \frac{3}{2} \frac{5}{2}  (1-x)^{-7/2} \\
+    &f^{(n)}(x) = -\frac{1}{2} \frac{1}{2} \frac{3}{2} \frac{5}{2} ... \frac{2n-3}{2} (1-x)^{\frac{2n-1}{2}}
+\end{align*}
+completamos la sucesión presente en el numerador con los términos pares y hasta el término $2n$
+\begin{align*}
+    f^{(n)}(x) &= -\frac{1}{2} \frac{1}{2} \frac{3}{2} \frac{5}{2} ... \frac{2n-3}{2} (1-x)^{\frac{2n-1}{2}} = \\
+      &= -\frac{1}{2} \frac{1}{2} \frac{2}{2} \frac{3}{2} \frac{4}{4} \frac{5}{2} \frac{6}{6} ... \frac{2n-3}{2} \frac{2n-2}{2n-2} \frac{2n-1}{2n-1} \frac{2n}{2n} (1-x)^{\frac{2n-1}{2}2} = \\
+        &= -\frac{1}{2} (2n)!  \frac{1}{2} \frac{1}{2} \frac{1}{2} \frac{1}{4} \frac{1}{2} \frac{1}{6} ... \frac{1}{2} \frac{1}{2n-2} \frac{1}{2n-1} \frac{1}{2n} (1-x)^{\frac{2n-1}{2}} =\\
+      &= -\frac{1}{2} (2n)!   \frac{1}{4}   \frac{1}{4\cdot2} \frac{1}{4\cdot3} ... \frac{1}{4\cdot(n-1)} \frac{1}{2n-1} \frac{1}{2n} (1-x)^{\frac{2n-1}{2}} =\\        
+            &= - (2n)!    \frac{1}{4}   \frac{1}{4\cdot2} \frac{1}{4\cdot3} ... \frac{1}{4\cdot(n-1)} \frac{1}{4\cdot n} \frac{1}{(2n-1)} (1-x)^{\frac{2n-1}{2}} = - \frac{(2n)!}{n! (2n-1) 4^n}
+\end{align*}
+
+Finalmente obtenemos el desarrollo en serie indicado evaluando $f^{(n)}$ en $x=0^+$
+
+
+\paragraph{Propiedad 3} Si $u$ y $v$ son tales que $0 \leq u \leq 1 \ , \ 0 \leq v \leq 1$ y dados $A,B \in \reals$ 
+
+\begin{equation}
+    \abs{A \sqrt{1-u} - B \sqrt{1-v} } \leq \abs{A-B} + \sum_{n=1}^{\infty} f_n \left(\abs{A} u^n + \abs{B} v^n\right)
+    \label{eqn:desigtriangconproductoria2}
+\end{equation}
+
+Como $A$ y $B$ pueden ser mayores que 1 (en módulo), no se puede aplicar directamente la propiedad 1, con lo cual primero reemplazamos las raíces con sus desarrollos en serie y luego se distribuye.
+
+\begin{equation}
+    \abs{A \sqrt{1-u} - B \sqrt{1-v} } \leq \abs{A-B} + \sum_{n=1}^{\infty} f_n \left(\abs{A} u^n + \abs{B} v^n\right)
+    \label{eqn:desigtriangconproductoria3}
+\end{equation}

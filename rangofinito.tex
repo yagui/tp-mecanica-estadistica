@@ -1,0 +1,121 @@
+\section{Aproximación de Rango Finito}
+
+El problema de trabajar con las probabilidades de transición y su estado de equilibrio asociado es que depende de la historia hasta $\tau_i(\omega{-\infty}^{-1})$ cuando este no es acotado.
+
+Queremos aproximar la probabilidad de transición $P(\omega(0)|\omega_{-\infty}^{-1})$ con $P(\omega(0)|\omega_{-R}^{-1})$, donde $\tau_i(\omega_{-\infty}^{-1})$ se reemplaza por $\tau_i(\omega_{-R}^{-1})$. 
+
+Ahora, existen una cantidad finita de bloques de disparos o estados de configuraciones posibles, que podrán ser codificadas mediante un número entero:
+\begin{equation}
+    w=\sum_{i=1}^N \sum_{n=-R}^{-1} 2^{(i-1)+(n+R)N} \omega_i (n). \label{eqCode_w}
+\end{equation}
+
+De esta forma cada palabra constituye una estado de una cadena de Markov, donde existen $2^{NR}$ estados posibles:
+
+\begin{equation}
+    \Omega^R = \{ 0,....,2^{NR}-1\}
+\end{equation}
+
+\subsection{Matriz de transición de estados}
+
+De la proposición 6, se sabe que las probabilidades de transición no dependen del tiempo. Es decir, la cadena es \textit{homogenea}. Entonces tenemos la matriz $\mathcal{L}^{(R)}$ de dimensión $2^{NR}$ x $2^{NR}$:
+
+\begin{equation}
+    \mathcal{L}^{(R)}_{w',w}  \doteq    \left\{ \begin{array}{ll}
+                            P(\omega(0)|\omega^{-1}_{-R}) & \text{si } w' \backsim \omega^{-1}_{-R},~ w \backsim \omega^{0}_{-R+1}, \\ 
+                            0,           & \text{otros casos}
+                            \end{array}\right.
+    \label{matriz_L}
+\end{equation}
+
+Podemos definir las transiciones 'legales' o permitidas mediante una matriz de incidencia:
+
+\begin{equation}
+    \mathcal{I}_{w',w}  = \left\{ \begin{array}{ll}
+                            1, & \text{si } w' \rightarrow w \text{ si es una transición legal} \\ 
+                            0,           & \text{otros casos}
+                            \end{array}\right.
+\end{equation}
+
+$\mathcal{I}$ es primitiva, es decir $\exists m > 0$ tal que $\forall w',~w \in \Omega^R x \Omega^R$ donde $\mathcal{I}^m_{w',w}>0$.
+En efecto, $\mathcal{I}^m_{\omega',\omega}>0$ significa que $\exists$ una configuración que contenga los bloques $w'$ y $w$, donde los primeros patrones de cada bloque estén separados por R transiciones. Lo cual confirma que en m pasos se puede pasar de $w'$ a $w$.
+
+\subsection{Potencial de rango R+1}
+
+Utilizando la misma representación que en \eqref{eqCode_w} para los bloques de tamaño R+1, cada bloque  $\omega^0_{-R}$ podemos asociarlo a una palabra W:
+
+\begin{equation}
+    W=\sum_{i=1}^N \sum_{n=-R}^{0} 2^{(i-1)+(n+R)N} \omega_i (n) \backsim \omega^0_{-R} .
+    \label{configuraciones_W}
+\end{equation}
+
+y definimos,
+
+\begin{equation*}
+    \psi^{(R)}(W) = \sum^N_{i=1} [ \omega_i(0) log( \Pif ) + (1-\omega_i(0)) log(1-\Pif)]
+\end{equation*}
+
+$\psi^{(R)}(W)$ es el potencial de rango R+1, correspondiente a una aproximación del potencial \eqref{potencailnu} cuando la memoria tiene profundidad R. 
+Entonces, la probabilidad de ransición entre una configuración $w'$ y otra $w$ será:
+
+\begin{equation*}
+    \mathcal{L}^{(R)}_{w',w}= e^{ \psi^{(R)}(w)} \mathcal{I}_{w',w}
+\end{equation*}
+
+Del álgebra de matrices, podemos decir que $\mathcal{L}^{(R)}$ también es primitiva y tiene un autovalor real "s", que es el de mayor módulo y por ser $\mathcal{L}^{(R)}$ una matriz de probabilidades, será igual a $s=1$.
+Y como consecuencia de esto, la presión topológica será:
+
+\begin{equation}
+    P(\psi^{(R)})= log(s)=0
+\end{equation}
+
+Los autovalores a izquierda y derecha $l\mathcal{L}^{(R)}=sl$ y $\mathcal{L}^{(R)}r=sr$ con $r_i>0$, donde $i\in |2^{NR}|$ las enumeración de las posibles configuraciones, son la unica medida invariante de probabilidad que tiene la cadena de Markov, $\mu_\psi^R = lr)$.
+De esta forma, se pude calcular la probabilidad de un bloque de disparo con una longitud arbitraria mediante:
+
+\begin{equation}
+    \mu_\psi^{(R)}([\omega]^{t+R}_s)=\mu_\psi^{(R)}(w(s)) \prod_{n=s}^{t-1} \mathcal{L}^{(R)}_{w(n+1)',w(n)}
+\end{equation}
+
+con $w(n) \backsim \omega^{n+R}_n $.
+
+Se puede comprobar que $ mu_\psi^{(R)}$ es un estado de Gibbs \cite{keller_equilibrium_1998} y como la presión topológica se iguala a cero, la entropia será:
+
+\begin{equation*}
+    h(\mu_\psi^{(R)}) = -\mu_\psi^{(R)}(\psi^{(R)})
+\end{equation*}
+
+\subsection{Convergencia de la aproximación del potencial de rango finito}
+
+Una forma de analizar cuan bien aproxima una medida de rango finito, primero comparamos los potenciales asociados:
+
+\begin{equation*}
+    || \psi - \psi^{(R)} ||_{\infty} \leq sup{ |\psi(\omega) - \psi(\omega')| : \omega,\omega' \in X, \omega(t)=\omega'(t), \forall t \in {-R,...,0}  } \triangleq var_R(\psi)
+\end{equation*}
+
+que desde el teorema 1, estará acotado por:
+
+\begin{equation*}
+    || \psi - \psi^{(R)} ||_{\infty} \leq K'\gamma^R
+\end{equation*}
+
+Como $\mu_\psi^{(R)}$ y $\mu_\psi$ son distribuciones de Gibbs, usamos la divergencia \textcolor{red}{KL} para estados de equilibrio se puede encontrar una cota para la distancia entre la medida en rango finito respecto a la de rango infinito:
+
+\begin{equation*}
+    d(\mu_{\psi^{(R)}}, \mu_\psi) = P(\psi) - \mu_{\psi^{(R)}}(\psi) - h(\mu_{\psi^{(R)}}) = \mu_{\psi^{(R)}}(\psi^{(R)}-\psi)
+\end{equation*}
+
+donde presión topológica es cero porque $\psi$ está normalizado y desde el teorema 1 encontramos que la distancia estará acotada con:
+\begin{equation*}
+     d(\mu_{\psi^{(R)}},  \mu_\psi) < K'\gamma^R
+\end{equation*}
+
+Lo que indica que la distancia decae exponencialmente rápido con una velocidad $gamma$.
+Un consecuencia práctica de estos resultados es la posibilidad de aproximar $\psi$ a un potencial de rango $R$, suponiendo que la distancia entre las medidas es aproximadamente 1:
+
+\begin{align*}
+    1 & \approxeq K'\gamma^R \\
+    \log(1) = 0 & \approxeq \log(K')+R\log(\gamma) \\
+    R\log(\gamma) & \approxeq - \log(K') \\
+    R & \approxeq - \frac{\log(K')}{\log(\gamma)}
+\end{align*}
+    
+De esta forma se puede estimar el rango a elegir en función de los parámetros del sistema. 

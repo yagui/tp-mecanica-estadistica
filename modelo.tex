@@ -1,0 +1,415 @@
+\section{Definiciones y resultados preliminares}
+
+\subsection{Modelo}
+
+Sea una red definida por:
+
+\begin{itemize}
+    \item $N$ dimensión de la red neuronal (cantidad de neuronas).
+    \item W matriz de pesos sinápticos. $W_{ij}$ intensidad de asociación entre las neurona $i$ con la $j$. Los pesos sinápticos son acotados $W_{ij} \in [W_{min},W_{max}]$
+    \item $V=(V_i)_{i=1}^N$ vector de potencial de membrana, donde cada $V_i$ representa el potencial de membrana de la neurona $i$ con $i={1,...,N}$.
+    \item $\theta$ umbral de disparo, invariante respecto del tiempo y único para todas las neuronas, donde $\theta \in \reals$ y $\theta >0$.
+    \item $Z(x)$ una función indicadora que indica si la neurona disparó.
+\end{itemize}
+
+Definimos $Z(V_i) \in \reals$ como:
+
+\begin{equation*}
+    Z(V_i) :=  \left\{ \begin{array}{ll}
+            1   & \text{si el potencial de la neurona} i, \ V_i > \theta, i={1,..,N} \\ 
+            0  & \text{otros casos},
+            \end{array}\right.
+    \label{eqn:indicadoraV}
+\end{equation*}
+es decir, $Z(V_i)=\indi{V_i>\theta}$. Definimos $Z(V)= (Z(V_i))^N_{i=1}$ como el vector de estados de la red.
+
+\subsubsection{Dinámica de la red}
+
+Trabajaremos con tiempo $t$ discreto, y en esta primera parte consideraremos la que la red comienza en un estado inicial de potenciales de acción $V(s)$ donde $s \in \enteros$ y acotado. 
+Sea $\gamma \in [0,1]$ la tasa de olvido de la red (\emph{leak rate}), los potenciales de membrana se comportarán de acuerdo a la siguiente dinámica, donde los parámetros $W$, $\gamma$, $N$ y $\theta$ son constantes para todo tiempo discreto:
+
+\begin{equation}
+    V(t+1) = F(V(t)) + \sigma_B B(t)
+    \label{eqn:dinamica1}
+\end{equation}
+donde $F(V(t)) = \left(F_i(V(t))\right)_i$ y
+\begin{equation}
+    F_i(V(t)) = \gamma\ V_i(t)\ (1-Z(V_j(t))) + \sum_{j=1}^N W_{ij} Z(V_i(t)) +I_i 
+    \label{eqn:dinamica2}
+\end{equation}
+
+El término representa el campo externo o contribuciones externas al sistema. $I_i \in \reals$ y en este trabajo consideraremos que $I_i$ son acotados y constantes para todos tiempo discreto.
+
+\subsubsection{Ruido}
+
+El ruido está representado a través de $B(t)=(B_i(t))^N_{i=1}$ en el segundo término de la ecuación \eqref{eqn:dinamica1}. Cada $B_i(t)~\mathcal{N}(0,1)$ representa ruido aditivo gaussiano y se consideran independientes las neuronas. El factor $\sigma_B$ es un factor de ajuste para la amplitud del ruido.
+
+Definimos:
+\begin{equation}
+    \Pi(x) := \frac{1}{\sqrt{2\pi}} \int_x^{+\infty} e^{-\frac{u^2}{2}} du
+\end{equation}
+como la función de distribución acumulada a izquierda, que por su definición representa $\Pi(x)=\prob{B_i(t)>x}$.
+
+Introducimos la normalización de una variable aleatoria, que será de utilidad mas adelante:
+\begin{equation}
+    \prob{X>x_0} = \prob{\frac{X-\mu}{\sigma}>\frac{x_o-\mu}{\sigma}} = \Pi\left(\frac{x_o-\mu}{\sigma}\right)
+    \label{eqn:normgauss}
+\end{equation}
+
+\subsection{Definiciones}
+
+\subsubsection{Secuencia de disparo}
+
+Sea $\mathcal{M}=\reals^N$ un espacio de fase para nuestro sistema. Dos números $s,t \in \enteros$, $s<t$ tal que $V_s^t :=~(V(s),...,V(t))$ una trayectoria de potenciales de acción la red entre los tiempos $s$ y $t$. Cada $V_i(t)$ se asocia a un $\omega_i(t) = Z(V_i(t))$. Se defina un patrón de disparo de la red neuronal a tiempo $t$ al vector $\omega(t)= (\omega_i(t))^N_{i=1}$, que indica que neurona disparo a tiempo $t$, $\omega_i(t)=1$.
+
+Se define un bloque de disparo como la secuencias de patrones de disparos en un instante $t$, $\omega_s^t=[\omega(s),...,\omega(t)$]. Además la concatenación entre dos bloques de disparos se define como $\omega_s^{t_1}\omega_{t_1}^t=\omega_s^t$ con $s<t_1<t \in \enteros$.
+
+\subsubsection{Configuraciones (\emph{Raster Plot})}
+
+Se define $\mathcal{A}$ (equiv. $\omega_o$) el alfabeto, el set de los posibles patrones de disparos. $\mathcal{A}=\{0,1\}^N$ con $|\mathcal{A}|=2^N$. El espacio de configuraciones, $\mathcal{A}^{\enteros}$ tendrá como elementos los $\omega=\{\omega(t)\}^\infty_{t=-\infty}$ con $t \in \mathbb{Z}$. 
+
+Sea $\sigma([\omega_s^t])$ una $\sigma$-álgebra constituida por un set de cilindros $[\omega_s^t]=\{ \omega'(n) \in \mathcal{A}^{\enteros}$, $\omega'(n)=\omega(n), n=\{s,...,t\} $.   
+
+
+\subsubsection{Distancia}
+Se define la función distancia en $\mathcal{A}^{\enteros}$ como:
+
+\begin{equation}
+    d_{\theta}(\omega,\omega') := \left\{ \begin{array}{ll}
+        1 & \text{si } \omega \text{ y } \omega' \text{difieren por primera vez en el instante } n\\
+        0  & \text{si } \omega=\omega'
+    \end{array}\right.
+    \label{eqn:distancia}
+\end{equation}
+
+\subsubsection{Tiempo del último disparo}
+Dada la secuencia $\omega_s^t$ con $s y t \in \enteros / s<t$ y cada $i=1,...,N$, se define el tiempo de último disparo a la función:
+\begin{equation}
+    \tau_i(\omega_s^t) := \left\{ \begin{array}{ll}
+        s   & \text{si } \omega_i(k)=0, k=\{s,t\}. \\ 
+        \text{max}\{s \leq k \leq t, \omega_i(k)=1\}, & \text{si } \exists k \in \{s,...,t\} \text{ tal que }\omega_i(k)=1,
+    \end{array}\right.
+    \label{eqn:ultimoDisparo}
+\end{equation}
+
+Si bien llamamos ''tiempo del último disparo'' a $\tau_i$, podría ser el caso en que $\tau_i(\omega_s^t)=s$, debido a que NO hubo disparos, y es una situación indistinguible de que haya habido disparo en tiempo $s$.
+Entonces decimos que
+\begin{equation*}
+    \nexists / k \in [s+1,t] / \omega(k)=1 \left\{ \begin{array}{ll}
+        \text{si hay disparo en tiempo }s   & \tau_i(\omega_s^t)=s \text{ y }  \omega_i(s) = 1 \\ 
+        \text{si no hay disparo en tiempo }s   & \tau_i(\omega_s^t)=s \text{ y }  \omega_i(s) = 0
+    \end{array}\right.
+\end{equation*}
+
+\subsection{Distribución de probabilidad del potencial de membrana}
+
+Sea $P = \mathcal{N}(0,1)^{N \times \enteros}$ la distribución de probabilidad conjunta de la trayectoria del ruido para las N neuronas en los instantes $t\in \enteros$. En $P$ el potencial de membrana es un proceso estocástico y su evolución está dada por la ecuación \eqref{eqn:dinamica1}.
+
+\subsubsection{Distribución de probabilidad condicional de $V(t+1)$}
+
+Dado el par $(s,t)$, los cilindros con base $[\omega_s^t]=\mathcal{C}(\omega_s^t)$ forman una base de la $\sigma$-álgebra en $\mathcal{A}^{\enteros}$. 
+Primero analizaremos la distribución de probabilidad de $V(t+1)$ condicionada a $\omega_s^t=Z(V_s^t)$ y una condición inicial $V(s)$ que consideraremos acotada.
+
+\paragraph{Proposición 1.} Para cada par (s,t), condicionado a la secuencia de disparos  $Z(V_s^t)=\omega_s^t$, es decir conocemos qué neuronas dispararon y cuándo lo hicieron, en el intervalo $[s,t]$ y, dado $V(s)$ el potencial en el instante inicial, tenemos que el potencial de membrana en el instante $t+1$ es:
+\begin{equation}
+    V(t+1) = \left\{ \begin{array}{ll}
+        \gamma^{t+1-s} V(s) + C_i(\omega_s^t) + \sigma_B \  \xi_i(\omega_s^t)   & \text{si la neurona } i \text{ no disparó entre } s \text{ y } t\\ 
+        C_i(\omega_s^t) + \sigma_B \ \xi_i(\omega_s^t)  & \text{en todo otro caso}
+    \end{array}\right.
+    \label{eqn:potencialDef}
+\end{equation}
+donde
+\begin{equation}
+     C_i(\omega_s^t) = \sum_{j=1}^N W_{ij} X_{ij}(\omega_s^t) + I_i \frac{1-\gamma^{t+1-\tau_i(\omega_s^t) }}{1-\gamma}
+\end{equation}
+\begin{equation}
+    X_{ij}(\omega_s^t) = \sum_{l=\tau_i(\omega_s^t)}^t \gamma^{t-l} \omega_j(l)
+\end{equation}
+\begin{equation}
+    \xi_i(\omega_s^t) = \sum_{l=\tau_i(\omega_s^t)}^t \gamma^{t-l} B_i(l)
+\end{equation}
+
+Esta proposición indica que la neurona pierde la memoria cuando dispara, o sea, la neurona vuelve a una estado basal de potencial de membrana y sólo los estados activos del resto de las neuronas de la red contribuyen al incremento de su potencial. 
+
+\begin{proof}[\bf{Demostración de la Proposición 1}]
+Primero analizaremos el caso simple en el cual no hay disparos de ninguna neurona entre los tiempos $s$ y $t$, es decir, $\tau_i(\omega_s^t)=s$ y $\omega_i(k)=0, \forall k \in [s,t]$. En esta condición el término $(1-\omega_i(k))$ es siempre $1$
+\begin{align*}
+    V_i(s+1) &= \gamma V_i(s)(1-\omega_i(s)) +I_i = \gamma V_i(s) +I_i\\
+    V_i(s+2) &= \gamma V_i(s+1)(1-\omega_i(s+1)) +I_i = \gamma^2 V_i(s) + (\gamma + 1) I_i \\
+    V_i(s+3) &= \ldots = \gamma^3 V_i(s) + (\gamma^2+\gamma + 1) I_i
+\end{align*}
+Continuando con la sucesión, si evaluamos en el instante $s + (t+1-s)$ tenemos que:
+\begin{equation}
+    V_i(s+(t+1-s)) = V_i(t+1) = \gamma^{t+1-s} V_i(s)+(\gamma^{t+s} +...+\gamma+1)=\gamma^{t+1-s}V_i(s)+\frac{1-\gamma^{t+1-s}}{1-\gamma} I_i
+    \label{eqn:potencial1}
+\end{equation}
+
+Si hubo uno o más disparos de la neurona $i$ entre los tiempos $s$ y $t$, siendo el último en el instante $k$ tenemos que: $\tau_i(\omega_s^t)=k$, $\omega_i(k)=1$ y $\omega_i(k+1)=0,...,\omega_i(t)=0$, donde tendremos que $(1-\omega_i(k))=0$ entonces:
+\begin{align*}
+    V_i(k) \ \ \ \ \ &= \gamma V_i(k-1)(1-\omega_i(k-1)) +I_i = \gamma^{k-s} V_i(s) + (\gamma^{k-1-s} + ... + 1) I_i \\
+    V_i(k+1) &= \gamma V_i(k)(1-\omega_i(k)) + I_i = I_1\\
+    V_i(k+2) &= \gamma V_i(k+1)(1-\omega_i(k+1)) +I_i = (\gamma+1) I_i \\
+    V_i(k+3) &= ... = (\gamma^2+\gamma + 1) I_i 
+\end{align*}
+
+Continuando con la sucesión llegamos a:
+\begin{equation}
+    V_i(t+1) = \frac{1-\gamma^{t+1-s}}{1-\gamma} I_i
+\end{equation}
+que resulta la misma es la misma expresión que \eqref{eqn:potencial1} sin el término de la condición inicial. Es decir, una vez que se produce el disparo de la neurona en algún instante entre $t$ y $s$, el instante inicial no tiene incidencia en el estado futuro de la neurona. Esto implica que luego de un disparo, la neurona ''pierde la memoria''.
+
+Ahora analizamos el caso en que la neurona i nunca disparó (es decir $\omega(k)=0 \forall k$, pero contemplando la incidencia del resto de las neuronas del sistema. Además tenemos en cuenta el factor estocástico $B_i$. Nuevamente, considerando el instante inicial $V_i(s)$ desarrollamos el potencial para los instantes posteriores:
+\begin{align*}
+    V_i(s+1) =\ & \gamma V_i(s)\ (1-\omega_i(s))+ \sum_{j=1}^N  W_{ij} \ \omega_j(s) + \sigma_B B_i(s) + I_i \\
+    V_i(s+2) =\ & \gamma V_i(s+1)\ (1-\omega_i(s+1))+ \sum_{j=1}^N  W_{ij} \ \omega_j(s+1) +
+               \sigma_B B_i(s+1) + I_i \\
+             =\ & \gamma^2 V_i(s) + I_i(\gamma+1) + \sigma_B[\gamma B_i(s) + B_i(s+1)] + \left[\gamma \sum_{j=1}^N  W_{ij} \omega_j(s) + \sum_{j=1}^N  W_{ij} \ \omega_j(s+1) \right]\\
+    V_i(s+3) =\ &\gamma^3 V_i(s) + I_i(\gamma^2+\gamma+1) + \sigma_B[\gamma^2 B_i(s) + \gamma B_i(s+1) + B_i(s+2)] + \\
+    &\sum_{j=1}^N  W_{ij} \left[\gamma^2 \omega_j(s) + \gamma \omega_j(s+1) + \omega_j(s+2)\right]             
+\end{align*}
+
+Continuando con la sucesión, tenemos que:
+\begin{align*}
+    V_i(t+1) =\ & V_i(s+(t+1-s)) = \gamma^{t+1-s} V_i(s)+ \sigma_B [\gamma^{t-s} B_i(s) + \gamma^{t-s-1} B_i(s+1) + ...+\gamma B_i(t)] \\
+                & +I_i(\gamma^{t-s}+ ... + \gamma +1) + \sum_{j=1}^N W_{ij} \left[\gamma^{t-s} \omega_j(s) + \gamma^{t-s-1} \omega_j(s+1) + ...+\gamma \omega_j(t-1) + \omega_j(t)\right]\\
+    V_i(t+1) =\ & \gamma^{t+1-s}V_i(s)+ \sum_{j=1}^N W_{ij} \left(\sum_{l=s}^t \gamma^{t-l}\omega_j(l) \right) + \sigma_B \left(\sum_{l=s}^t \gamma^{t-l} B_i(l)\right) +\frac{1-\gamma^{t+1-s}}{1-\gamma} I_i
+\end{align*}
+
+Nuevamente, si hubo uno o más disparos en el instante entre los instantes $s$ y $t$ el término asociado a la condición inicial desaparece y el aporte de las otras neuronas, así como el ruido estocástico y el campo externo, solo influyen desde el instante del último disparo $\tau_i(\omega^t_s)$:
+\begin{equation}
+     V_i(t+1) = \sum_{j=1}^N W_{ij} \left(\sum_{l=\tau_i(\omega_s^t)}^t \gamma^{t-l}\omega_j(l) \right) + \sigma_B \left(\sum_{l=\tau_i(\omega_s^t)}^t \gamma^{t-l} B_i(l) \right) +\frac{1-\gamma^{t+1-\tau_i(\omega_s^t)}}{1-\gamma} I_i
+     \label{eqn:potencial}
+\end{equation}
+\end{proof}
+
+\subsubsection{Esperanza Condicional de V(t+1)}
+
+Dada una condición inicial y una secuencia $\omega_s^t$, el potencial de membrana \eqref{eqn:potencialDef} tiene una parte estocástica y otra determinística.
+\begin{equation}
+  V_i(t+1) = \underbrace{\gamma^{t+1-s} V_i(s) + C_i(\omega_s^t)}_{\text{determinístico}} + \underbrace{\sigma_B \  \xi_i(\omega_s^t)}_{\text{estocástico}}
+  \label{eqn:potencialCompacto}
+\end{equation}
+
+Como los $B_i(t)$ son independiente con idéntica distribución (\emph{i.i.d.}), $~\mathcal{N}(0,1)$, con $P$ la distribución de probabilidad conjunta, el término $ \xi_i(\omega_s^t)$ es una suma ponderada de variables aleatorias gaussianas, en independientes entre los distintos $i=1..N$.
+\begin{equation}
+\xi_i(\omega_s^t) = \sum_{l=\tau_i(\omega_s^t)}^t \gamma^{t-l} B_i(l)
+\label{eqn:xi1}
+\end{equation}
+
+\paragraph{Proposición 2.}
+Para cada par $(s,t)$, condicionado a $Z(V_s^t)=\omega_s^t$ la secuncia de disparos y $V(s)$ la condición inicial, con $P$ la distribución de probabilidad conjunta de $B_i(k)$, $k \in \mathbb{Z}$ y $V(t+1)$ con distribución gaussiana, la esperanza condicional del potencial de membrana y la matriz de covarianza son:
+\begin{equation}
+    \mathbb{E}[V_i(t+1)|\omega_s^t, V(s)] = \left\{ \begin{array}{cl}
+                        \gamma^{t+1-s} V_i(s) + C_i(\omega_s^t)   & \text{si la neurona $i$ no disparó entre $s$ y $t$.}\\ 
+                         C_i(\omega_s^t)    & \text{en otro caso (sí hubo disparo)}
+                    \end{array}\right.
+    \label{eqn:espCond1}
+\end{equation}
+\begin{equation}
+    \var{V_i(t+1)|\omega_s^t, V(s)} = \frac{1-\gamma^{2(t+1-\tau_i(\omega_s^t))}}{1-\gamma^2} := \sigma_i^2(\omega_s^t)
+\end{equation}
+\begin{equation}
+    \cov{V_i(t+1),V_j(t+1)|\omega_s^t, V(s)} = \sigma_i^2(\omega_s^t) \delta_{ij} = \left\{ \begin{array}{cl}
+                        \sigma_i^2(\omega_s^t)   & \text{si } i=j\\ 
+                         0    & \text{si } i\neq j
+                    \end{array}\right.
+\end{equation}
+
+\begin{proof}[\bf{Demostración de la Proposición 2}]
+Podemos calcular la esperanza y la varianza de $\xi_i(\omega_s^t)$ a partir de la ecuación \eqref{eqn:xi1}:
+\begin{equation*}
+    \mathbb{E}[\xi_i(\omega_s^t)] = \sum_{l=\tau_i(\omega_s^t)}^t \gamma^{t-l} \  \mathbb{E}\underbrace{[B_i(l)]}_{=0} =0
+\end{equation*}
+\begin{equation*}
+    \var{\xi_i(\omega_s^t)} = \sum_{l=\tau_i(\omega_s^t)}^t \left(\gamma^{t-l}\right)^2 \underbrace{\var{B_i(l)}}_{=1} = \frac{1-\gamma^{2(t+1-\tau_i(\omega_s^t))}}{1-\gamma^2}
+\end{equation*}
+
+Entonces, a partir de la ecuación \eqref{eqn:potencialCompacto} y teniendo en cuenta estos resultados, se desprende la expresión de la esperanza condicional y la varianza del potencial de membrana.
+
+Finalmente, fijada la secuencia de disparos $\omega_s^t$ y la condición inicial $V(s)$, el potencial de membrana de cada neurona es determinístico salvo por el término $\sigma_B \  \xi_i(\omega_s^t)$ que como dijimos, es independiente de otras neuronas.
+En consecuencia podemos afirmar que los potenciales de membrana $V_i(t+1)$ y $V_j(t+1)$ son condicionalmente independientes entre sí. Por lo tanto:
+
+\begin{equation}
+    \cov{V_i(t+1),V_j(t+1)|\omega_s^t, V(s)} = \sigma_i^2(\omega_s^t) \delta_{ij} = \left\{ \begin{array}{cl}
+            \sigma_i^2(\omega_s^t)   & \text{si } i=j\\ 
+             0    & \text{si } i\neq j
+        \end{array}\right.
+\end{equation}
+\end{proof}
+
+\subsection{Probabilidad de disparo}
+
+Primero vamos a analizar la probabilidad de que la neurona $i$ no dispare entre los instantes $s$ y $t$. Esta es la probabilidad de que el potencial $V_i(k) < \theta$ con $k \in [s,t]$ ($\theta$ es el umbral de disparo).
+
+\begin{align*}
+    \prob{ \bigcap_{n=s}^t \{ V_i(n) < \theta \} } & =
+    \sum_{\omega_s^t \in \mathcal{A}^{t-s}}
+       \prob{ \bigcap_{n=s}^t \{ V_i(n) < \theta\} | \omega_s^t } \prob{omega_s^t}\\
+     & =     \sum_{\omega_s^t \in \mathcal{A}^{t-s}}
+       \prob{ \{ V_i(s) < \theta \cap  V_i(s+1) < \theta \cap... \cap V_i(t) < \theta \} | \omega_s^t } \prob{\omega_s^t}
+\end{align*}
+donde hemos aplicado la fórmula de probabilidad total.
+
+Aplicando la propiedad XXXXXX
+
+\begin{align*}
+    \prob{ \bigcap_{n=s}^t \{ V_i(n) < \theta \} } & = 
+    \sum_{\omega_s^t \in \mathcal{A}^{t-s}} \left[
+       \prob{ V_i(t) < \theta \left| V_i(t-1) < \theta \cap... \cap V_i(s) < \theta \cap \omega_s^t \right.} \cdot \right.\\
+       & \qquad \qquad \cdot \prob{ V_i(t-1) < \theta \left| V_i(t-2) < \theta \cap... \cap V_i(s) < \theta \cap \omega_s^t  \right.} \cdot ... \cdot \\
+       & \left. \qquad \qquad \cdot \prob{ V_i(s+1) < \theta \left| V_i(s) < \theta \cap \omega_s^t \right.} \cdot \prob{ V_i(s) < \theta \left| \omega_s^t \right.} \cdot \prob{\omega_s^t} \right] \\
+       &= \sum_{\omega_s^t \in \mathcal{A}^{t-s}} \left\{ \left[ \prod_{n=s+1}^t \!\!
+       \prob{ V_i(n) < \theta \left|  \bigcap_{l=s}^{n-1} \{ V_i(l) < \theta \} \cap \omega_s^t \right.} \right]\!\! \cdot \!\prob{ V_i(s) < \theta \left| \omega_s^t \right. } \cdot \prob{\omega_s^t} \right\}
+\end{align*}
+
+Dentro de la productoria, la secuencia $\omega_s^t$ solo es relevante hasta el instante $n-1$, mientras que el segundo factor, correspondiente a la probabilidad del potencial en el instante inicial, es independiente de la secuencia de disparos. Entonces:
+
+\begin{equation}
+    \prob{ \bigcap_{n=s}^t \{ V_i(n) < \theta \} } \! = \!\!\!
+    \sum_{\omega_s^t \in \mathcal{A}^{t-s}} \! \left\{ \left[ \prod_{n=s+1}^t  \!\!
+      \prob{ V_i(n) < \theta \left|  \bigcap_{l=s}^{n-1} \{ V_i(l) < \theta \} \cap \omega_s^{n-1} \! \! \right. } \! \right] \!\! \cdot \! \prob{ V_i(s) \! < \! \theta } \! \cdot\! \prob{\omega_s^t} \right\}
+    \label{eqn:probdisparo}
+\end{equation}
+    
+Analizamos el término dentro de la productoria
+\begin{equation*}
+     \prob{ V_i(n) < \theta \left|  \bigcap_{l=s}^{n-1} \{ V_i(l) < \theta \} \cap \omega_s^{n-1} \right. }
+\end{equation*}
+
+Este término representa la probabilidad de que el potencial en determinado instante sea menor al umbral, dado que en todos los otros instantes previos también fue menor al umbral y dada una secuencia de disparos deterimanda.
+Esto se puede representar con la expresión del potencial de membrana para el caso donde la neurona no ha disparado (ecuación \eqref{eqn:potencialDef})
+\begin{equation*}
+     \prob{ V_i(n) < \theta \left|  \bigcap_{l=s}^{n-1} \{ V_i(l) < \theta \} \cap \omega_s^{n-1} \right. } =
+    \prob{ \gamma^{n-s} V(s) + C_i(\omega_s^{n-1}) + \sigma_B \  \xi_i(\omega_s^{n-1}) < \theta }
+\end{equation*}
+
+Esta expresión puede calcularse como 1 menos la probabilidad de que el potencial sea mayor que el umbral, y luego aplicar la definición de la función $\Pi(x)$ (ecuación \eqref{eqn:normgauss})
+\begin{align*}
+     \prob{ V_i(n) < \theta \left|  \bigcap_{l=s}^{n-1} \{ V_i(l) < \theta \} \cap \omega_s^{n-1} \right.} & =  1-  \prob{ \gamma^{n-s} V(s) + C_i(\omega_s^{n-1}) + \sigma_B \  \xi_i(\omega_s^{n-1}) > \theta } \\
+     & =  \Pi\left(\frac{\theta - \gamma^{n-s} V(s) - C_i(\omega_s^{n-1})}{\sigma_B \frac{\sqrt{1-\gamma^{2(n-s)}}}{1-\gamma^2}} \right)
+\end{align*}
+
+Podemos decir que, como $V_i(s)$ y $W_{ij}$ se asumen acotados, para cualquier par $(n,s)$ con $n>s$
+\begin{equation*}
+     0 < a <\prob{ V_i(n) < \theta \left|  \bigcap_{l=s}^{n-1} \{ V_i(l) < \theta \} \cap \omega_s^{n-1} \right. } <b<a
+\end{equation*}
+
+Por otro lado, 
+\begin{equation*}
+     0 < c <\prob{ V_i(s) < \theta \left|  \omega_s^s \right.} <b<a
+\end{equation*}
+
+Entonces definimos:
+\begin{equation}
+    \Pi_- = \min\{a,c\} \qquad \Pi_+ = \max\{b,d\}
+\end{equation}
+
+\paragraph{Proposición 3.}
+Existe una probabilidad, distinta de cero, de que la neurona $i$ NO dispare acotada por
+\begin{equation}
+    0 < \left( \Pi_- \right)^{t-s} < \prob{ \bigcap_{n=s}^t \{V_i(n) < \theta \} }  < \left( \Pi_+ \right)^{t-s} < 1
+\end{equation}
+
+\begin{proof}[\bf{Demostración de la Proposición 3.}]
+Partimos de la ecuación \eqref{eqn:probdisparo}
+
+\begin{equation*}
+    \sum_{\omega_s^t \in \mathcal{A}^{t-s}} \left\{ \prod_{n=s+1}^t \left[
+       \underbrace{ \prob{ V_i(n) < \theta \left|  \bigcap_{l=s}^{n-1} \{ V_i(l) < \theta \} \cap \omega_s^{n-1} \right.} }_{\textcircled{a}} \right] \cdot  \underbrace{\prob{ V_i(s) < \theta}}_{\textoCircle{b}} \cdot \prob{\omega_s^t} \right\} = \textoCircle{A}
+\end{equation*}
+Como los términos $\textoCircle{a}$ y $\textoCircle{b}$ tienen a $\Pi_-$ y $\Pi_+$ como cotas superior e inferior respectivamente, tenemos que:
+\begin{equation*}
+    \sum_{\omega_s^t \in \mathcal{A}^{t-s}} \left\{ \prod_{n=s+1}^t 
+       \Pi_-  \cdot  \Pi_- \cdot \prob{\omega_s^t} \right\} 
+       < \textoCircle{A}
+    \sum_{\omega_s^t \in \mathcal{A}^{t-s}} \left\{ \prod_{n=s+1}^t 
+       \Pi_+  \cdot  \Pi_+ \cdot \prob{\omega_s^t} \right\} 
+\end{equation*}
+\begin{equation*}
+    \sum_{\omega_s^t \in \mathcal{A}^{t-s}} \left\{ \prod_{n=s+1}^t 
+       \Pi_-  \cdot  \Pi_- \cdot \prob{\omega_s^t} \right\} 
+       < \textoCircle{A}
+    \sum_{\omega_s^t \in \mathcal{A}^{t-s}} \left\{ \prod_{n=s+1}^t 
+       \Pi_+  \cdot  \Pi_+ \cdot \prob{\omega_s^t} \right\} 
+\end{equation*}
+
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{proof}[\bf{Demostración de la Proposición 4.}]
+\end{proof}
+
+\paragraph{Proposición 4.}
+
+\begin{proof}[\bf{Demostración de la Proposición 4.}]
+\end{proof}
+
+
+\paragraph{Proposición 5.}
+
+\begin{proof}[\bf{Demostración de la Proposición 5.}]
+\end{proof}
+
+
+
+
+
+
+\subsection{Estacionariedad}
+
+\paragraph{Proposición 6} Fijamos una secuencia $a_{-\infty}^0$, $a(-n) \in \mathcal{A}, n\geq 0 \ \forall \ t$
+\begin{equation}
+    \prob{\omega(t)=a(0) | \omega_{-\infty}^{t-1}=a_{-\infty}^{-1})} = 
+    \prob{(\omega(0)=a(0) | \omega_{-\infty}^{-1}=a_{-\infty}^{-1})} = 
+    \prob{(\omega(1)=a(0) | \omega_{-\infty}^{0}=a_{-\infty}^{-1})}
+\end{equation}
+
+Para llegar a este resultado primero desarrollamos $X_{ij}$ (ver ecuación \eqref{eqn:Xij})
+\begin{equation*}
+    X_{ij}(\omega_{-\infty}^{t-1}) = \sum_{l=\tau_i(\omega_{-\infty}^{t-1})}^{t-1} \gamma^{t-1-l} \omega_j(l)
+\end{equation*}
+si $\omega_{-\infty}^{t-1} = a_{-\infty}^{-1}$ entonces $\tau_i(\omega_{-\infty}^{t-1}) = t + \tau_i(a_{-\infty}^{-1})$
+\begin{equation*}
+    X_{ij}(\omega_{-\infty}^{t-1}) = 
+    \sum_{l=t + \tau_i(a_{-\infty}^{-1})}^{t-1} \gamma^{t-1-l} \omega_j(l) = 
+    \sum_{l'= \tau_i(a_{-\infty}^{-1})}^{-1} \gamma^{-1-l'} \omega_j(l'+t) =
+\end{equation*}
+donde $l'=l-t$. Si consideramos que $\omega_{-\infty}^{t-1} = a_{-\infty}^{-1}$ entonces $\omega(t-n)=a(-n) \Rightarrow \omega(t+l') = a(l')$
+\begin{equation}
+    X_{ij}(\omega_{-\infty}^{t-1}) = 
+    \sum_{l'= \tau_i(a_{-\infty}^{-1})}^{-1} \gamma^{-1-l'} a_j(l') = X_{ij}(a_{-\infty}^{-1})
+\end{equation}
+
+A continuación desarrollamos $C_i$ (ver ecuación \eqref{eqn:Ci})
+\begin{align}
+\nonumber    C_i(\omega_{-\infty}^{t-1}) &= \sum_{j=1}^N W_{ij} X_{ij}(\omega_{-\infty}^{t-1}) + I_i \frac{1-\gamma^{t-\tau_i(\omega_{-\infty}^{t-1})}}{1-\gamma} \\
+    &= \sum_{j=1}^N W_{ij} X_{ij}(a_{-\infty}^{-1}) + I_i \frac{1-\gamma^{t-\tau_i(a_{-\infty}^{-1})}}{1-\gamma} = C_i(a_{-\infty}^{-1})
+\end{align}
+
+Finalmente desarrollamos $\sigma_i^2$ (ver ecuación \eqref{eqn:sigma})
+\begin{equation}
+  \sigma_i(\omega_{-\infty}^{t-1})= \sigma_B^2 \frac{1-\gamma^{2(t-\tau_i(\omega_{-\infty}^{t-1}))}}{1-\gamma^2} = \sigma_B^2 \frac{1-\gamma^{-2 \tau_i(a_{-\infty}^{-1})}}{1-\gamma^2} = \sigma_i^2(a_{-\infty}^{-1})
+\end{equation}
+
+Es importante notar que estas propiedades se cumplen sólo porque $W_{ij}$, $\gamma$ y $I_i$ son independientes del tiempo. Con estas propiedades desarrolladas, analizamos la dependencia con $t$ de probabilidad de obtener un patrón $\omega(t)$ dada una historia determinada.
+
+\begin{align}
+    \nonumber    \prob{\omega(t)=a(0) | \omega_{-\infty}^{t-1}=a_{-\infty}^{-1}} &= \prod_{i=1}^N \omega_i(t) \Pi\left( \frac{\theta - C_i(\omega_{-\infty}^{t-1})}{\sigma_i(\omega_{-\infty}^{t-1})}\right)+(1-\omega_i(t)) \left[ 1-\Pi\left(\frac{\theta - C_i(\omega_{-\infty}^{t-1})}{\sigma_i(\omega_{-\infty}^{t-1})}\right)\right] \\
+    \nonumber    & = \prod_{i=1}^N a_i(0) \Pi\left( \frac{\theta - C_i(a_{-\infty}^{-1})}{\sigma_i(a{-\infty}^{-1})}\right)+(1-a_i(0)) \left[ 1-\Pi\left(\frac{\theta - C_i(a_{-\infty}^{-1})}{\sigma_i(a_{-\infty}^{-1})}\right)\right] \\
+    &=\prob{\omega(0)=a(0) | \omega_{-\infty}^{-1}=a_{-\infty}^{-1}}
+\end{align}
+
+Por lo cual podemos decir que es un proceso estacionario.

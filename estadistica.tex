@@ -1,0 +1,21 @@
+\section{Estadística de una Configuración (Raster plot)}
+
+El modelo estadístico introducido en el sección anterior, basado en una aproximación Markoviana, permite calcular explícitamente los indicadores clásicos utilizado en neurociencia.
+
+Utilizando el vector $W$ presentado en ~\ref{configuraciones_W}, se puede definir el potencia $\psi^{R}$ en función de $W \sim \omega_{-R}^0$:
+
+\begin{equation}
+    \psi^{R}(W) = \sum^{L=2^{N(R+1)}}_{n=1} \alpha_n \chi_{n(W)} \equiv \psi_{\alpha}^{(R)}(W),
+\end{equation}
+
+Donde $\alpha_n = \psi^{(R)}(W_n)$ con $n=1...L$ y $L=2^{N(R+1)}$. Llamamos a $\chi_n(W)$ un función indicadora que será 1 si $W=W_n$ y 0 en otro caso. 
+
+Luego, $e^{\alpha_n}$ es la probabilidad condicional $P(\omega(0)|\omega^{-1}_{-R})$. Si fijamos el pasado $\omega^{-1}_{-R})$, la suma de los $e^{\alpha_n}$ sobre todos los bloque $W_n$ que tienen pasado $\omega^{-1}_{-R})$ y $\omega(0)=1$ es la probabilidad de que la neurona i dispare dado el pasado. El producto de los elementos de la matriz $\mathcal{L}^{(R)}_{w',w}$, definida en \ref{matriz_L}, permite calcular la probabilidad de cierta secuencias de disparo dada una historia determinada.
+
+\begin{itemize}
+    \item R $=$ la respuesta de un subset de neuronas.
+    \item S $=$ el estímulo provisto por el subset de neuronas correspondientes al pasado determinado.
+\end{itemize}
+
+Se puede calcular, a partir de la matriz $\mathcal{L}^{(R)}_{w',w}$ y dado que $P(S)$ es conocida (a partir de la medida invariante $\mu_{\psi^{(R)}}$, la probabilidad condicional $P(R|S)$. Lo que permite caracterizar el código neuronal de una red, donde los estímulos son trenes de disparos. 
+

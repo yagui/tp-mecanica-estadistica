@@ -1,0 +1,420 @@
+\section{Medida de probabilidad}
+
+Como hemos probado que el sistema es estacionario, nos concentramos en $P(\omega(0)|w_{-\infty}^{-1})$. Trabajamos entonces con secuencias $\mathcal{A}_{-\infty}^{0}$.
+
+A continuación utilizaremos la siguiente notación: $\omega=\omega_{-\infty}^0$ ; $\uom=\omega_{-\infty}^{-1}$ ; $\Omega=\mathcal{A}_{-\infty}^0$ ; $\uOm=\mathcal{A}_{-\infty}^{-1}$.
+
+La $\sigma$-álgebra de cilindros en $\Omega$, $\sigma(\Omega)=\mathcal{F}$ y, análogamente, $\sigma(\uOm)=\underline{\mathcal{F}}$.
+
+Se define la función $T$ como el desplazamiento a derecha sobre $\Omega$.
+
+\begin{equation}
+    \left. \begin{array}{rcl}
+         T: \Omega & \rightarrow & \Omega  \\
+         \omega(t) & \rightarrow & \omega(t-1) \  t \leq 0
+    \end{array} \right\} (T\omega)(t) = \omega(t-1) \text{ con }  t\leq 0
+\end{equation}
+con $a \in \mathcal{A} \Longrightarrow \omega'=\omega a \ / \ \omega'(t-1) = \omega(t) \  t \leq 0  \  \omega'(0) = a$
+
+
+\subsection{$g$-funciones} 
+
+Las $g$-funciones son funciones medibles tales que:
+\begin{equation}
+    g: \Omega \rightarrow [0,1] \text{ tal que } \forall \ \omega \in \Omega :
+    \sum_{\omega', T(\omega')=\omega} g(\omega') = 1 = \sum_{a\in\mathcal{A}} g(\omega a)
+\end{equation}
+
+Notemos que la función de probabilidad de transición es una $g$-función
+
+\begin{equation}
+    g_0(\omega) = \prob{\omega(0)|\uom} = 
+    \prod_{i=1}^N \left[ \omega_i(0) \Pif - (1-\omega_i(0))\log\left(1-\Pif \right)\right]
+    \label{eqn:gof}
+\end{equation}
+
+\begin{equation}
+   \sum_{\omega', T(\omega')=\omega} g_0(\omega') = 
+   \sum_{a \in \mathcal{A}} \prob{a|\omega} = 1
+\end{equation}
+
+Las $g$ funciones cumplen las siguientes propiedades:
+
+a) Una $g$-función es no nula si para todo $\omega in \Omega$, $g(\omega)>0$.
+
+b) La "variación" de una $g$-función se define como:
+\begin{equation}
+    var_k(g):= \sup_{\omega,\omega' \in \Omega} \left\{\abs{g(\omega)-g(\omega')}: \omega(t)=\omega'(t) \ \forall t \in \{-k, ... ,0\}\right\}
+\end{equation}
+
+c) Una $g$-función es continua si
+\begin{equation}
+    var_k(g) \rightarrow 0 \text{ cuando } k \rightarrow +\infty
+\end{equation}
+
+\paragraph{Proposición 7} La función $g_0(\omega)$ es no nula.
+
+Demostración: Suponemos que existe $\omega \in \Omega$ tal que $g_0(w)=\prob{\omega(0)|\uom}=0$, entonces existe una neurona (o un sitio) para la cual $\Pif = 0$ ó $1$ (ver ecuación \eqref{eqn:gof}).
+Para que esto se cumpla tendría que suceder que $C_i(\uom) = \pm \infty$ ó que $\sigma_i(\uom) = 0$. Pero estas magnitudes están acotadas según \eqref{eqn:cotaC} y \eqref{eqn:cotaS} por lo tanto $g_0(\omega) > 0 \ \forall \ \omega$
+
+
+\paragraph{Proposición 8} $g_0(\omega)$ es continua.
+
+Demostración: Para realizar la demostración de la proposición 8 utilizaremos las siguientes propiedades (demostradas en el anexo).
+
+a) Dada una colección $a_i,b_i$ tal que $0\leq a_i\leq 1$ y $0 \leq b_i \leq 1$, $\forall \ i = \{1, ... \ , N\}$ 
+\begin{equation}
+    \abs{\prod_{i=1}^N a_i - \prod_{i=1}^N b_i} \leq \sum_{i=1}^N \abs{a_i - b_i}
+\end{equation}
+
+b) El desarrollo en serie de Taylor, de $\sqrt{1-x}$ cuando $0 \leq x \leq 1$ es:
+\begin{equation}
+    \sqrt{1-x}= 1-\sum_{n=1}^{+\infty} f_n \cdot x^n \quad \text{con} \quad f_n = \frac{(2n)!}{(n!)^2 (2n-1) 4^n} \geq 0
+    \label{eqn:taylor}
+\end{equation}
+
+c) Si $u$ y $v$ son tales que $0 \leq u \leq 1 \ , \ 0 \leq v \leq 1$ y dados $A,B \in \reals$ 
+
+\begin{equation}
+    \abs{A \sqrt{a-u} - B \sqrt{1-v} } \leq \abs{A-B} + \sum_{n=1}^{\infty} f_n \left(\abs{A} u^n + \abs{B} v^n\right)
+    \label{eqn:desigtriangconproductoria}
+\end{equation}
+
+Para simplificar la notación se denominará, con $i=\{1, ... \ , N\}$ y $\uom=\omega_{-\infty}^{-1}$ 
+
+\begin{align*}
+    y_i&=\frac{\theta-C_i(\uom)}{\sigma_i(\uom)} \quad , \quad C_i=C_i(\uom) \quad , \quad \sigma_i=\sigma_i(\uom)  \quad , \quad \tau_i=\tau_i(\uom) \\
+    y_i'&=\frac{\theta-C_i(\uom')}{\sigma_i(\uom')} \quad , \quad C_i'=C_i(\uom') \quad , \quad \sigma_i'=\sigma_i(\uom')  \quad , \quad \tau_i'=\tau_i(\uom')
+\end{align*}
+
+\begin{align*}
+a_i&=\omega_i(0)\Pi(y_i)+(1-\omega_i(0))(1-\Pi(y_i)) \\ 
+b_i&=\omega_i'(0)\Pi(y_i')+(1-\omega_i'(0))(1-\Pi(y_i'))
+\end{align*}
+
+Para $k>0$, $\omega(0)=\omega'(0)$, entonces
+\begin{equation}
+    \abs{a_i-b_i}=\abs{\omega_i(0) (\Pi(y_i) - \Pi(y_i')) + (1-\omega_i(0)) (\Pi(y_i) - \Pi(y_i'))} = \abs{\Pi(y_i)-\Pi(y_i')}
+    \label{eqn:ayb}
+\end{equation}
+
+Calcularemos la variación de la función $g_0$,
+
+\begin{align*}
+    var_k(g_0(w)) & = \sup_{\omega,\omega' \in \Omega} \left\{\abs{g_0(\omega)-g_0(\omega')}: \omega(t)=\omega'(t) \ \forall t \in \{-k, ... ,0\}\right\} \\
+    & = \sup_{\omega,\omega' \in \Omega} \left\{\abs{\prod_{i=1}^N a_i - \prod_{i=1}^N b_i}: \omega(t)=\omega'(t) \ \forall t \in \{-k, ... ,0\}\right\} \\
+    & \leq \sup_{\omega,\omega' \in \Omega} \left\{\sum_{i=1}^N \abs{a_i - b_i} : \omega(t)=\omega'(t) \ \forall t \in \{-k, ... ,0\}\right\} \\
+    & \leq \sum_{i=1}^N \sup_{\omega,\omega' \in \Omega} \left\{\abs{a_i - b_i} : \omega(t)=\omega'(t) \ \forall t \in \{-k, ... ,0\}\right\} 
+\end{align*}
+
+Utilizando la ecuación \eqref{eqn:ayb} resulta:
+\begin{equation}
+    var_k(g_0(w)) \leq \sum_{i=1}^N \sup_{\omega,\omega' \in \Omega} \left\{ \abs{\Pi(y_i)-\Pi(y_i')} : \omega(t)=\omega'(t) \ \forall t \in \{-k, ... ,0\}\right\}
+    \label{eqn:varg0}
+\end{equation}
+
+Para un $k>0$ fijo, cuando $\omega$ es tal que el último disparo sucedió en algún instante entre $-k$ y $0$, es decir que $\tau(\uom) \in \{-k, ... \ , 0 \}$ tenemos que $\Pi(y_i) = \Pi(y_i')$. Entonces el supremo se obtiene para las configuraciones $\omega$ y $\omega'$ que tienen $\tau_i,\tau_i' < -k$
+
+Como $\gamma < 1$
+
+\begin{equation}
+  \gamma^{-\tau}<\gamma^k \longrightarrow 1-\gamma^{-\tau}> 1-\gamma^k \longrightarrow \frac{1}{1-\gamma^{-\tau}} < \frac{1}{1-\gamma^k}
+  \label{eqn:desigualdadgamma}
+\end{equation}
+
+Recordando la expresión de la función $\Pi(x)$
+
+\begin{equation}
+    \Pi(x)=\frac{1}{\sqrt{2\pi}} \int_x^{+\infty} e^{-\frac{u^2}{2}} du \Longrightarrow \Pi'(x)=\frac{1}{\sqrt{2\pi}} e^{-\frac{x^2}{2}}
+\end{equation}
+
+Entonces $\norm{\Pi'}_{\infty} = 1/\sqrt{2 \pi}$
+
+Aplicando la propiedad \eqref{eqn:derivadavelocidad}
+\begin{equation}
+    \abs{\Pi(y_i) - \Pi(y_i')} \leq \abs{y_i - y_i'} \norm{\Pi'}_{\infty} = \abs{y_i - y_i'} \frac{1}{\sqrt{2 \pi}}
+    \label{eqn:derivada}
+\end{equation}
+
+Desarrollamos a continuación el término $\abs{y_i - y_i'}$
+
+\begin{equation*}
+    \abs{y_i - y_i'} = \abs{\frac{\theta - C_i(\uom)}{\sigma_i(\uom)} - 
+    \frac{\theta - C_i(\uom')}{\sigma_i(\uom')}}
+    = \abs{\frac{\theta - C_i}{\sigma_i} - \frac{\theta - C_i'}{\sigma_i'}}
+    = \abs{\theta\left( \frac{1}{\sigma_i} - \frac{1}{\sigma_i'} \right)  - \left( \frac{C_i}{\sigma_i} - \frac{C_i}{\sigma_i'} \right) }
+\end{equation*}
+\begin{equation}
+    \abs{y_i - y_i'} \leq \theta \abs{\frac{1}{\sigma_i} - \frac{1}{\sigma_i'}} + 
+    \abs {\frac{C_i}{\sigma_i} - \frac{C_i'}{\sigma_i'}}
+    \label{eqn:diffys}
+\end{equation}
+
+    %&= \abs{\theta\left( \frac{1}{\sigma_i} - \frac{1}{\sigma_i'} \right)  - \left( \frac{C_i %\sigma_i' - C_i'\sigma_i}{\sigma_i\sigma_i'}  \right) } \leq
+    %\theta \abs{\frac{1}{\sigma_i} - \frac{1}{\sigma_i'}} + \abs {\frac{C_i \sigma_i' - C_i' %\sigma_i} {\sigma_i\sigma_i'}}
+
+
+Recordando la expresión de $\sigma_i$ de la ecuación \eqref{eqn:sigmai}, el primer término de esta ecuación resulta:
+\begin{align}
+\nonumber   \abs{\frac{1}{\sigma_i} - \frac{1}{\sigma_i'}} &= \frac{\sqrt{1-\gamma^2}}{\sigma_B}
+    \abs{ \frac{1}{\sqrt{1-\gamma^{2\tau_i}}} - \frac{1}{\sqrt{1-\gamma^{2\tau'_i}}} } = \\
+     &=\frac{\sqrt{1-\gamma^2}}{\sigma_B \sqrt{1-\gamma^{2\tau_i}} \sqrt{1-\gamma^{2\tau'_i}} }
+    \abs{ \sqrt{1-\gamma^{2\tau'_i}} - \sqrt{1-\gamma^{2\tau_i} }}
+    \label{eqn:diffsigma}
+\end{align}
+
+Por un lado, recordando \eqref{eqn:desigualdadgamma} tanto $\sqrt{1-\gamma^{2\tau'_i}}$ y $\sqrt{1-\gamma^{2\tau_i} }$ son menores que $\sqrt{1-\gamma^{2k} }$. 
+Por otro lado, aplicando la propiedad de la ecuación \eqref{eqn:taylor} tenemos que:
+
+\begin{align}
+    \abs{ \sqrt{1-\gamma^{2\tau'_i}} - \sqrt{1-\gamma^{2\tau_i} } } & \leq
+    \sum_{n=1}^\infty f_n \left[ \left( \gamma^{-2\tau'_i}\right)^n + 
+    \left( \gamma^{-2\tau_i}\right)^n  \right] \leq
+    \sum_{n=1}^\infty f_n \left[ \left( \gamma^{-2\tau'_i}\right)^n + 
+    \left( \gamma^{-2\tau_i}\right)^n  \right] \\
+    & \leq 2 \sum_{n=1}^\infty f_n \gamma^{2kn} \leq 2 \gamma^{k} \sum_{n=1}^\infty f_n \gamma^{2k(n-1)} 
+\end{align}
+
+Por lo tanto:
+\begin{equation}
+  \abs{\frac{1}{\sigma_i} - \frac{1}{\sigma_i'}} \leq \frac{2 \sqrt{1-\gamma^{2}}}{\sigma_B (1-\gamma^2k)} \sum_{n=1}^\infty f_n \gamma^{2kn} = \frac{2 \gamma^{2k} \sqrt{1-\gamma^{2}}}{\sigma_B (1-\gamma^2k)} \sum_{n=1}^\infty f_n \gamma^{2k(n-1)} =
+  \frac{2 \gamma^{2k} \sqrt{1-\gamma^{2}}}{\sigma_B (1-\gamma^{2k})} S(\gamma)
+  \label{eqn:diffinvsigma}
+\end{equation}
+donde definimos
+\begin{equation}
+    S(\gamma) = \sum_{n=1}^\infty f_n \gamma^{2k(n-1)} = \sum_{n=0}^\infty f_n \gamma^{2kn}
+\end{equation}
+y se cumple que 
+\begin{equation}
+    \lim_{k\rightarrow\infty} S(\gamma) = 0
+    \label{eqn:limiteS}
+\end{equation}
+
+Para desarrollar el segundo término de la ecuación \eqref{eqn:diffys} utilizamos el mismo desarrollo de la ecuación \eqref{eqn:diffsigma}
+
+\begin{align}
+\nonumber  \abs {\frac{C_i}{\sigma_i} - \frac{C_i'}{\sigma_i'}} &=
+    \frac{\sqrt{1-\gamma^2}}{\sigma_B}
+    \abs{ \frac{C_i}{\sqrt{1-\gamma^{2\tau_i}}} - \frac{C_i'}{\sqrt{1-\gamma^{2\tau'_i}}} }=\\
+\nonumber   &=\frac{\sqrt{1-\gamma^2}}{\sigma_B \sqrt{1-\gamma^{2\tau_i}}
+    \sqrt{1-\gamma^{2\tau'_i}} }
+    \abs{ C_i\sqrt{1-\gamma^{2\tau'_i}} - C_i'\sqrt{1-\gamma^{2\tau_i} }} \\
+    & \leq  \frac{\sqrt{1-\gamma^2}}{\sigma_B \left(1-\gamma^{2k}\right)}
+    \abs{ C_i\sqrt{1-\gamma^{2\tau'_i}} - C_i'\sqrt{1-\gamma^{2\tau_i} }}
+\end{align}
+
+
+Aplicando la propiedad \eqref{eqn:desigtriangconproductoria} 
+\begin{align*}
+    \abs {\frac{C_i}{\sigma_i} - \frac{C_i'}{\sigma_i'}}
+    & \leq  \frac{\sqrt{1-\gamma^2}}{\sigma_B \left(1-\gamma^{2k}\right)} 
+    \left[ \abs{ C_i - C_i' } + \sum_{n=1}^{\infty} f_n \left[ \left( \gamma^{-2\tau_i'}\right)^n\abs{C_i} + 
+    \left( \gamma^{-2\tau_i}\right)^n\abs{C_i'} \right] \right] \\
+    &\leq \frac{\sqrt{1-\gamma^2}}{\sigma_B \left(1-\gamma^{2k}\right)} 
+    \left[ \abs{ C_i - C_i' } + \sum_{n=1}^{\infty} f_n \gamma^{2kn} \left( \abs{C_i} + \abs{C_i'} \right) \right]
+    \end{align*}
+donde consideramos que $\gamma^{-2\tau_i}$ y $\gamma^{-2\tau_i'}$ son ambos menores que $\gamma^{2k}$. También, si acotamos $\abs{C_i}$ y $\abs{C_i'}$ por medio de \eqref{eqn:cotasC} obtenemos
+\begin{equation}
+    \abs {\frac{C_i}{\sigma_i} - \frac{C_i'}{\sigma_i'}}
+     \leq \frac{\sqrt{1-\gamma^2}}{\sigma_B \left(1-\gamma^{2k}\right)} 
+    \left[ \abs{ C_i - C_i' } + 2 \abs{C_i^+} \gamma^{2k} S(\gamma) \right] 
+    \label{eqn:diffcispond}
+\end{equation}
+
+Utilizando la definición de $C_i$ y $C_i'$ \eqref{eqn:ci} tenemos:
+\begin{align}
+\nonumber \abs{ C_i - C_i' } &= 
+\abs{ \sum_{j=1}^N W_{ij} \left( \sum_{l=\tau_i}^{-1}\gamma^{-l-1} \omega_j(l) -\sum_{l=\tau_i'}^{-1} \gamma^{-l-1} \omega_j'(l) \right) + \frac{I_i}{1-\gamma} \left(\gamma^{-\tau_i} - \gamma^{-\tau_i'} \right) }\\
+&\leq \sum_{j=1}^N \abs{W_{ij}} \abs{ \sum_{l=\tau_i}^{-1}\gamma^{-l-1} \omega_j(l) -\sum_{l=\tau_i'}^{-1} \gamma^{-l-1} \omega_j'(l) } + \frac{\abs{I_i}}{1-\gamma} \abs{\gamma^{-\tau_i} - \gamma^{-\tau_i'} }
+\label{eqn:diffcis}
+\end{align}
+
+Por un lado
+\begin{equation}
+    \abs{\gamma^{-\tau_i} - \gamma^{-\tau_i'} } \leq \abs{\gamma^{-\tau_i}} + \abs{\gamma^{-\tau_i'} } \leq 2 \gamma^k
+    \label{eqn:restasgammas}
+\end{equation}
+
+Por otro lado, como $\omega_j(l)=\omega_j'(l)$ para todo $l \in \{-k, ..., 0\}$, entonces
+\begin{align*}
+    \abs{ \sum_{l=\tau_i}^{-1}\gamma^{-l-1} \omega_j(l) -\sum_{l=\tau_i'}^{-1} \gamma^{-l-1} \omega_j'(l) } & = 
+    \abs{ \sum_{l=\tau_i}^{-k-1}\gamma^{-l-1} \omega_j(l) -\sum_{l=\tau_i'}^{-k-1} \gamma^{-l-1} \omega_j'(l) }  \\
+    & \leq\abs{ \sum_{l=\tau_i}^{-k-1}\gamma^{-l-1} \omega_j(l)} + \abs{\sum_{l=\tau_i'}^{-k-1} \gamma^{-l-1} \omega_j'(l) }
+\end{align*}
+
+Si suponemos que $\omega_j(l)=1$ para todo $l \leq -k-1$ 
+\begin{equation}
+    \abs{ \sum_{l=\tau_i}^{-1}\gamma^{-l-1} \omega_j(l) -\sum_{l=\tau_i'}^{-1} \gamma^{-l-1} \omega_j'(l) } \leq
+    \abs{ \sum_{l=\tau_i}^{-k-1}\gamma^{-l-1}} + \abs{\sum_{l=\tau_i'}^{-k-1} \gamma^{-l-1} } 
+    \leq  \frac{2\gamma^k}{1-\gamma}
+    \label{eqn:sumasgammas}
+\end{equation}
+donde, considerando que $\tau_i \leq -k-1  \Rightarrow -\tau_i \geq k+1 \Rightarrow -\tau_i -k \geq +1$, hemos utilizado
+\begin{equation}
+    \sum_{l=\tau_i}^{-k-1}\gamma^{-l-1} = \sum_{m=k}^{-\tau_i-1}\gamma^{m} = \sum_{m=0}^{-\tau_i-1-k}\gamma^{m+k} =  \gamma^k \frac{1-\gamma^{-\tau_i-k}}{1-\gamma} \leq
+    \gamma^k \frac{1}{1-\gamma}
+\end{equation}
+
+
+Entonces, usando las ecuaciones \eqref{eqn:restasgammas} y \eqref{eqn:sumasgammas}, en la ecuación \eqref{eqn:diffcis}, queda:
+
+\begin{equation}
+ \abs{ C_i - C_i' } \leq 
+ \sum_{j=1}^N \abs{W_{ij}}  \frac{2\gamma^k}{1-\gamma} + \frac{\abs{I_i}}{1-\gamma} 2 \gamma^k =
+ \frac{2 \gamma^k}{1-\gamma} \left(\abs{I_i} + \sum_{j=1}^N \abs{W_{ij}} \right)
+\end{equation}
+
+Reemplazamos esta ecuación en la ecuación \eqref{eqn:diffcispond}
+\begin{align}
+\nonumber \abs {\frac{C_i}{\sigma_i} - \frac{C_i'}{\sigma_i'}} &
+    \leq \frac{\sqrt{1-\gamma^2}}{\sigma_B \left(1-\gamma^{2k}\right)} 
+    \left[ \frac{2 \gamma^k }{1-\gamma} \left( \abs{I_i} + \sum_{j=1}^N \abs{W_{ij}} \right) + 2 \abs{C_i^+} \gamma^{2k} S(\gamma) \right] \\
+    &\leq \frac{2 \gamma^k \sqrt{1-\gamma^2}}{\sigma_B \left(1-\gamma^{2k}\right)} 
+    \left[ \frac{1 }{1-\gamma} \left( \abs{I_i} + \sum_{j=1}^N \abs{W_{ij}} \right) + \abs{C_i^+}  \gamma^k S(\gamma) \right]
+    \label{eqn:diffcispond2}
+\end{align}
+
+Reemplazamos \eqref{eqn:diffinvsigma} y \eqref{eqn:diffcispond2} en \eqref{eqn:diffys}
+
+\begin{align}
+\nonumber  \abs{y_i - y_i'}  & \leq 
+    \theta \frac{2 \gamma^{2k} \sqrt{1-\gamma^{2}}}{\sigma_B (1-\gamma^{2k})} S(\gamma) + 
+    \frac{2 \gamma^k \sqrt{1-\gamma^2}}{\sigma_B \left(1-\gamma^{2k}\right)} 
+    \left[ \frac{1 }{1-\gamma} \left( \abs{I_i} + \sum_{j=1}^N \abs{W_{ij}} \right) + \abs{C_i^+}  \gamma^k S(\gamma) \right] \\
+    & \leq \frac{2 \gamma^k \sqrt{1-\gamma^2}}{\sigma_B \left(1-\gamma^{2k}\right)} 
+    \left[ \frac{1 }{1-\gamma} \left( \abs{I_i} + \sum_{j=1}^N \abs{W_{ij}} \right) + \left(\abs{C_i^+} +\theta \right) \gamma^k S(\gamma) \right]    
+    \label{eqn:diffys2}
+\end{align}
+
+ Utilizando las ecuaciones \eqref{eqn:diffys2} y \eqref{eqn:derivada} en la ecuación \eqref{eqn:varg0} llegamos a
+  \begin{align}
+     \nonumber var_k(g_0(w)) & \leq \sum_{i=1}^N \sup_{\omega,\omega' \in \Omega} \left\{ \abs{\Pi(y_i)-\Pi(y_i')} : \omega(t)=\omega'(t) \ \forall t \in \{-k, ... ,0\}\right\} \\
+\nonumber & \leq \sum_{i=1}^N \left\{
+    \sqrt{\frac{2}{\pi}}\frac{ \gamma^k \sqrt{1-\gamma^2}}{\sigma_B \left(1-\gamma^{2k}\right)} 
+    \left[ \frac{1 }{1-\gamma} \left( \abs{I_i} + \sum_{j=1}^N \abs{W_{ij}} \right) + \left(\abs{C_i^+} +\theta \right) \gamma^k S(\gamma) \right] \right\} \\
+\nonumber & \leq  
+    \sqrt{\frac{2}{\pi}} \frac{  \sqrt{1-\gamma^2}}{\sigma_B \left(1-\gamma^{2k}\right)} 
+    \left[ \frac{1 }{1-\gamma} \left( \sum_{i=1}^N \abs{I_i} + \sum_{i=1}^N \sum_{j=1}^N \abs{W_{ij}} \right) + \gamma^k \left( N \theta + \sum_{i=1}^N \abs{C_i^+}  \right)  S(\gamma) \right]    \gamma^k
+    \label{eqn:variacion}
+ \end{align}
+
+Teniendo en cuenta la expresión \eqref{eqn:limiteS} se cumple que:
+
+\begin{align*}
+    \lim_{k\rightarrow\infty} {\sqrt{\frac{2}{\pi}} \frac{  \sqrt{1-\gamma^2}}{\sigma_B \left(1-\gamma^{2k}\right)} 
+    \left[ \frac{1 }{1-\gamma} \left( \sum_{i=1}^N \abs{I_i} + \sum_{i=1}^N \sum_{j=1}^N \abs{W_{ij}} \right) + \gamma^k \left( N \theta + \sum_{i=1}^N \abs{C_i^+}  \right)  S(\gamma) \right]  } = \\
+     = \sqrt{\frac{2}{\pi}} \frac{  \sqrt{1+\gamma}}{\sigma_B \sqrt{1-\gamma} }
+    \left( \sum_{i=1}^N \abs{I_i} + \sum_{i=1}^N \sum_{j=1}^N \abs{W_{ij}} \right) = \kappa
+\end{align*}
+
+Entonces:
+\begin{equation}
+    var_k(g_0(w)) \xrightarrow[k\rightarrow \infty]{} 0
+\end{equation}
+y lo hace en forma similar a $\kappa \gamma^k$
+
+Por lo tanto $g_0(\omega)$ es continua
+
+\subsection{Medida de Gibbs}
+Una medida de probabilidad $\mu$ en $M(\Omega, \mathcal{F})$ es una $g$-medida (medida de Gibbs) si \cite{keane_strongly_1972}
+
+\begin{equation}
+    \int_\Omega f(\omega) g(\omega a) \mu(d\omega) = \int_{\omega(0)=a} f(\omega) \mu(d\omega)
+\end{equation}
+$\forall \ a \in \mathcal{A}$, $g(\omega)$ una $g$-función, $\forall f(\omega)$ medible en $\underline{\mathcal{F}}$.
+
+Como $g_0$ es continua, siempre existe una $g$-medida \cite{keane_strongly_1972}. Johansson y Oberg \cite{johansson_square_2003} demostraron que si $g_0$ es una $g$-función, continua y no nula, y cumple
+
+\begin{equation}
+    \sum_{k\geq 0} var^2_k[\log(g_o(\omega))] < \infty
+    \label{eqn:jona}
+\end{equation}
+es decir, la suma converge, entonces existe una única meidda de Gibbs.
+
+\paragraph{Teorema 1} El sistema tiene una única $g_0$-medida independientemente de los parámetros $W_{i,j} , I_i, \gamma, \theta$ con $i,j=1...N$
+
+Demostración: se utiliza la ecuación \eqref{eqn:jona} para lo cual se analiza la variabilidad de $\log(g_0)$
+
+\begin{align*}
+    \log(g_0(\omega))  & = \log \left[ \prod_{i=1}^N \left[ \omega_i(0)\Pi(y_i) - (1-\omega_i(0))\log(1-\Pi(y_i))\right] \right] = \\
+     &= \sum_{i=1}^N \log\left[ \omega_i(0) \Pi(y_i)+(1-\omega_i(0))(1-\Pi(y_i)) \right] = \\
+     &= \sum_{i=1}^N \left[ \omega_i(0) \log\left[\Pi(y_i)\right]+(1-\omega_i(0))\log\left[1-\Pi(y_i) \right] \right] = 
+\end{align*}
+
+donde se tuvo en cuenta que $\omega_i$ es $0$ ó $1$.
+
+\begin{align}
+\nonumber    var_k[\log(g_o(\omega))] &= \sup \left\{  \abs{\log(g_0(\omega)) - \log(g_0(\omega'))}  \forall \omega,\omega' \in \Omega \ / \  \omega(t) = \omega'(t) \ \forall \ t \in \{-k,...,0\} \right\}\\
+\nonumber    &=\sup_{\omega,\omega' \in \Omega} \left\{  \abs{\sum_{i=1}^N \left[ \omega_i(0) \log\left(\frac{\Pi(y_i)}{\Pi(y_i')}\right) - (1-\omega_i(0)) \log \left(\frac{1-\Pi(y_i)}{1-\Pi(y_i')} \right) \right]} \right\} \leq \\
+    & \leq \sum_{i=1}^N \sup_{\omega,\omega' \in \Omega} \left\{  \abs{ \left[ \log\left(\frac{\Pi(y_i)}{\Pi(y_i')}\right) - \log\left(\frac{1-\Pi(y_i)}{1-\Pi(y_i')}\right) \right]} \right\}
+    \label{eqn:varlog1}
+\end{align}
+
+Recordando que:
+\begin{align*}
+    y_i= \frac{\theta - C_i(\omega_{-\infty}^{-1})} {\sigma_i(\omega_{-\infty}^{-1})} = 
+         \frac{\theta - C_i(\uom)} {\sigma_i(\uom)}
+\end{align*}
+
+Como $C_i(\omega_{-\infty}^t)$ y $\sigma_i^2(\omega_{-\infty}^t)$ están acotadas según \eqref{eqn:cotaC} y \eqref{eqn:cotaSigma} respectivamente se obtiene
+
+\begin{equation}
+    \theta - C_i^+ \leq \theta - C_i(\uom) \leq \theta - C_i^- \Longrightarrow
+    \frac{\theta - C_i^+}{\frac{\sigma_B}{\sqrt{1-\gamma^2}}} \leq \frac{\theta - C_i(\uom)}{\sigma_i(\omega)} \leq \frac{\theta - C_i^- \Longrightarrow }{\sigma_B}    
+\end{equation}
+\begin{equation}
+    \sqrt{1-\gamma^2}~\frac{\theta - C_i^+}{\sigma_B} \leq y_i, y_i' \leq \frac{\theta - C_i^- }{\sigma_B}
+\end{equation}
+
+Tomamos 
+
+\begin{equation*}
+    a= \min_{i\in\{1,...,N\}} \left\{\sqrt{1-\gamma^2}~\frac{\theta - C_i^+}{\sigma_B} \right\}
+\end{equation*}
+\begin{equation*}
+    b= \max_{i\in\{1,...,N\}} \left\{\frac{\theta - C_i^-}{\sigma_B} \right\}
+\end{equation*}
+\begin{equation*}
+    \norm{f}_{[a,b]} = \sup_{x\in[a,b]} \left\{ \abs{f(x)}\right\}
+\end{equation*}
+
+Recordando la propiedad \eqref{eqn:velocidad} tomamos:
+
+\begin{equation}
+    \abs{\log \frac{\Pi(y_i)}{\Pi(y_i')}} = \abs{\log \Pi(y_i)  -\log \Pi(y_i')} \leq \abs{y_i-y_i'} \norm{\left(\log \Pi(x)\right)'}_{[a,b]}
+\end{equation}
+
+
+La función $(\log \Pi(x))'$ es:
+\begin{equation}
+    (\log \Pi(x))' = \frac{\Pi'(x)}{\Pi(x)} = \frac{e^{-\frac{x^2}{2}}}{\displaystyle \int_x^{+\infty}e^{-\frac{u^2}{2}}du}
+\end{equation}
+
+Cómo esta función es monótona creciente, tenemos que:
+\begin{equation}
+    \norm{\left(\log \Pi(x)\right)'}_{[a,b]} = \frac{e^{-\frac{b^2}{2}}}{\displaystyle \int_b^{+\infty}e^{-\frac{u^2}{2}}du} = \Upsilon
+\end{equation}
+donde $b<\infty$
+
+Por propiedad de la función $\Pi(x)$, tal que $1-\Pi(x)=\Pi(-x)$ tenemos también que:
+\begin{equation}
+    \abs{\log \frac{1-\Pi(y_i)}{1-\Pi(y_i')}} = 
+    \abs{\log \frac{\Pi(-y_i)}{\Pi(-y_i')}}  \leq \abs{(-y_i)-(-y_i')} \norm{\left(\log \Pi(x)\right)'}_{[a,b]}
+\end{equation}
+
+Entonces, reemplazando en la ecuación \eqref{eqn:varlog1}
+\begin{align*}
+  var_k[\log(g_o(\omega))] & \leq \sum_{i=1}^N \sup_{\omega,\omega' \in \Omega} \left\{  \abs{ \left[ \log\left(\frac{\Pi(y_i)}{\Pi(y_i')}\right) - \log\left(\frac{1-\Pi(y_i)}{1-\Pi(y_i')}\right) \right]} \right\} \\
+  & \leq \sum_{i=1}^N 2 \Upsilon \sup_{\omega,\omega' \in \Omega} \left\{  \abs{y_i-Y_i'} \right\} = 2 \Upsilon  \sum_{i=1}^N \sup_{\omega,\omega' \in \Omega} \left\{  \abs{y_i-y_i'} \right\}
+\end{align*}
+
+Recordando la ecuación \eqref{eqn:supys} podemos decir que $var_k[\log(g_o(\omega))] \leq K' \gamma^k$ con $K'=2 \sqrt{2 \pi} \Upsilon$
+
+Además,
+\begin{equation*}
+    \sum_{k\geq 0} var^2_k[\log(g_o(\omega))] \leq \sum_{k\geq 0} (K' \gamma^k)^2 =(K')^2 \sum_{k\geq 0} (\gamma^k)^2 = (K')^2 \frac{1}{1-\gamma} < \infty \  (CV)
+\end{equation*}
+porque $\abs{\gamma}<1$
+
+Entonces por el teorema de Johansson y Oberg \cite{johansson_square_2003}, existe una única $g$-medida.

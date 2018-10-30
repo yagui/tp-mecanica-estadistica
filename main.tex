@@ -1,0 +1,90 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[centertags]{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{geometry}
+\usepackage{dsfont} % para la funcion indicador \mathds{1}
+\usepackage{verbatim}
+
+\geometry{
+ left=25mm,
+ right=25mm,
+ top=20mm,
+ bottom=30mm,
+ }
+
+
+\newcommand{\expo}[1]{\exp{\left\lbrace #1 \right\rbrace}}
+\newcommand{\indi}[1]{\mathds{1}\left\lbrace #1 \right\rbrace}
+\newcommand{\umbral}{\theta}
+\newcommand{\uom}{\underline{\omega}}
+\newcommand{\uOm}{\underline{\Omega}}
+\newcommand{\Pif}{\Pi\!\left(\frac{\theta-C_i(\uom)}{\sigma_i(\uom)}\right)}
+\newcommand{\reals}{\mathds{R}}
+\newcommand{\enteros}{\mathds{Z}}
+\newcommand{\naturales}{\mathds{N}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\var}[1]{\text{var}\left[#1\right]}
+\newcommand{\cov}[1]{\text{cov}\left[#1\right]}
+\newcommand{\prob}[1]{\mathbb{P}\left(#1\right)}
+\newcommand{\textoCircle}[1]{\raisebox{.5pt}{\textcircled{\raisebox{-.9pt}{#1}}}}
+
+\title{Modelo de red neuronal a tiempo discreto con trenes de spikes. Dinámica con ruido}
+
+\author{Guillermo Delmas, Ariel Burman}
+
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% Test de fuentes
+% 
+% \begin{align*}
+% RQSZ \\
+% \mathcal{RQSZL} \\
+% \mathfrak{RQSZL} \\
+% % \mathbb{PRQSZL}
+% \mathds{PRQSZL}
+% \end{align*}
+
+% \begin{align*}
+% 3x^2 \in R \subset Q \\
+% % \mathnormal{3x^2 \in R \subset Q} \\
+% \mathrm{3x^2 \in R \subset Q} \\
+% % \mathit{3x^2 \in R \subset Q} \\
+% % % \mathbf{3x^2 \in R \subset Q} \\
+% \mathsf{3x^2 \in R \subset Q} \\
+% \mathtt{3x^2 \in L \subset Q} 
+% \end{align*}
+
+
+% potencial \verb$\psi$ $\psi$
+
+% sigma \verb$\sigma$ $\sigma$
+
+\input{intro}
+
+\input{modelo}
+
+\input{medida}
+
+\input{potencial}
+
+\input{rangofinito}
+
+\input{estadistica}
+
+\input{anexo}
+
+\bibliographystyle{plain}
+\bibliography{biblio}
+
+\end{document}

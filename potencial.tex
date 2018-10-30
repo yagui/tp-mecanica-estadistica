@@ -1,0 +1,142 @@
+\section{Potencial Regular}
+
+
+Una función $\psi$ es un potencial regular si es una función continua y cumple con \cite{keller_equilibrium_1998}
+
+\begin{align*}
+\left. \begin{array}{l}
+     \psi : \Omega \to \reals  \\
+     \psi \text{ es } C^0 \\ 
+     \displaystyle \sum_{k\geq0} var_k(\psi) < \infty
+\end{array} \right\}
+\Longrightarrow \psi \text{ es un potencial complejo}
+\end{align*}
+
+\subsection{Entropía}
+
+Dada una medida $\mu \in M_T(\Omega)$ donde $M_T(\Omega)$  es el set de medidas de probabilidad invariantes ante la transformación T, se define la entropía de la medida como:
+
+\begin{equation}
+    h(\mu) = \limsup{\frac{1}{n+1} \sum_{[\omega]_0^n} \mu([\omega]_0^n) \log(\mu([w]_0^n))}
+    \label{eqn:entropia}
+\end{equation}
+
+donde $[w]_0^n$ son todos los cilindros de longitud $n+1$
+
+\paragraph{Definición 5} Se denomina $\mu_\psi$, un estado de equilibro del potencial $\psi$, a la medida invariante respecto a $T$ sobre $\Omega$ tal que:
+
+\begin{equation}
+    P(\psi) = h(\mu_\psi) + \mu_\psi (\psi) = \sup_{}\mu \in M_T(\Omega) \left\{ h(\mu)+\mu(\psi)\right\}
+    \label{eqn:presiontopo}
+\end{equation}
+
+La presión topológica es cero cuando el potencial $\psi$ está normalizado. Es el caso de un potencial $\psi$ como el que utilizaremos ya que será el logaritmo de una probabilidad condicional\cite{keller_equilibrium_1998}.
+
+Si $\psi$ es un potencial regular, entonces los estados de equilibrios de $\psi$ son las $g$-medidas asociadas a una $g$-función continua. En nuestro caso, donde sabemos que la $g$-medida es única, la función $g_0$ se relaciona con el potencial según
+
+\begin{equation}
+    \psi(\omega) = \log[g_0(\omega)]
+\end{equation}
+
+
+\paragraph{Teorema 2} Para cualquier set de parámetros ($W_{i,j}$, $\gamma$, $\umbral$,
+$\sigma_B$) el sistema tiene una $g$-medida única, y es un estado de equilibro
+para el potencial $\psi=\log[g_0(\omega)]$
+
+
+
+\begin{align*}
+  \psi(\omega) & = \psi(\omega_{-\infty}^0)=\log[g_0(\omega)]= \\
+  & = \log\left[\prod_{i=1}^N\left[\omega_i(0) \ \Pi\left(\frac{\theta-C_i(\uom)}{\sigma_i(\uom)}\right)+(1-\omega_i(0))\left(1-\Pi\left(\frac{\theta-C_i(\uom)}{\sigma_i(\uom)}\right)\right)\right]\right] = \\
+  & = \sum_{i=1}^N \log\left[\omega_i(0) \ \Pi\left(\frac{\theta-C_i(\uom)}{\sigma_i(\uom)}\right)+(1-\omega_i(0))\left(1-\Pi\left(\frac{\theta-C_i(\uom)}{\sigma_i(\uom)}\right)\right)\right]
+\end{align*}
+
+como $\omega(0)$ es 0 o 1,
+
+\begin{equation}
+  \psi(\omega) = 
+  \sum_{i=1}^N \left[\omega_i(0) \log\left[ \Pi\left(\frac{\theta-C_i(\uom)}{\sigma_i(\uom)}\right)\right]+(1-\omega_i(0))\log\left[1-\Pi\left(\frac{\theta-C_i(\uom)}{\sigma_i(\uom)}\right)\right]\right] =
+  \label{potencailnu}
+\end{equation}
+
+
+\paragraph{Proposición 9} El potencial de membrana $V(t)$ es estacionario con densidad de probabilidad producto
+
+\begin{equation*}
+  \rho_V(v) = \prod_{i=1}^N \rho_{V_i}(v_i) 
+\end{equation*}
+
+donde
+
+\begin{equation*}
+  \rho_{V_i}(v_i) = \int_{\uOm} \frac{1}{\sqrt{2 \pi \sigma_i(\uom)}} e^{-\frac{1}{2}\left(\frac{v-C_i(\uom)}{\sigma_i(\uom)}\right)^2} \mu_\psi(d\uom)
+\end{equation*}
+
+donde su esperanza es $\mu_\psi[C_i(\uom)]$ y la varianza es $\mu_\psi[\sigma_i^2(\uom)]$
+
+
+\subsection{Tasa de disparos}
+
+\begin{equation*}
+  r_i(\omega) = P(\omega_i(0)=1 | \uom) = \Pif
+\end{equation*}
+
+
+\begin{equation*}
+  r_i = \mu_\psi(\omega_i(0)=1)
+\end{equation*}
+
+\begin{equation*}
+  r_i = \mu_\psi (r_i(\omega))=\Pif
+\end{equation*}
+
+
+
+\subsection{Entropía}
+
+Como el potencial $\psi$ está normalizado $P(\psi)=0=h(\mu_\psi)+\mu_\psi(\psi)$
+
+\begin{align}
+   h(\mu_\psi) & = - \sum_{i=1}^N \mu_\psi \left[ \omega_i(0) \log\left(\Pif\right) + (1-\omega_i(0)) \log\left( 1-\Pif\right) \right]  \nonumber \\
+  & = - \sum_{i=1}^N \left[\mu_\psi(\omega_i(0)) \ \mu_\psi\left( \log r_i(\omega) \right)+ \mu_\psi(1-\omega_i(0)) \ \mu_\psi \left(\log\left( 1-r_i(\omega) \right) \right) \right] \nonumber\\
+  & = - \sum_{i=1}^N \left[ r_i \ \mu_\psi\left( \log r_i(\omega) \right)+ (1-r_i) \ \mu_\psi \left(\log ( 1-r_i(\omega) ) \right) \right] \label{eqn:entro1}
+\end{align}
+  
+\paragraph{Proposición 10} La entropía del estado de equilibrio es positiva para cualquier conjunto de parámetros del sistema.
+
+Debido a que $\psi(\omega) < 0 \  \forall \  \omega \in \Omega$ entonces $\mu_\psi(\psi) < 0$. A partir de la ecuación \eqref{eqn:entro1} vemos que la entropía es siempre positiva.
+
+
+\subsection{Divergencia de Kullback-Leibler}
+
+Dadas dos medidas T-invariantes $(\mu,\nu)$ la diveregencia de Kullback-Leibler se define como
+
+\begin{equation}
+    d_{KL}(\mu,\nu) = \lim_{n\to\infty} \frac{1}{n+1} \sum_{[w]_0^n} \mu([w]_0^n) \log \left( \frac{\mu([w]_0^n)}{\nu([w]_0^n)} \right)
+\end{equation}
+
+
+Para una medida $\mu$ ergódica y $\mu_\psi$ un estado de gibbs del potencial $\psi$
+
+\begin{equation}
+    d_{KL}(\mu,\mu_\psi) = p(\psi)-\mu(\psi)-h(\psi) = h(\mu_\psi)+\mu_\psi(\psi)-(h(\mu)-\mu(\psi)) = (h(\mu_\psi) - h(\mu)) + (\mu_\psi(\psi) - \mu_(\psi))
+\end{equation}
+
+\subsection{Estados de Gibbs}
+
+Los estados de equilibrio de un potencial regular son las medidas de Gibbs o estados de Gibbs \cite{keller_equilibrium_1998}. Además, existe una constante $C_\psi >0$ tal que
+
+\begin{equation}
+    0 \leq e^{-C_\psi} \leq \frac{\mu_\psi([\omega]^n_0)}{e^{-(n+1)p(\psi)} e^{\sum^n_{k=0}\psi(T^k\omega)}} \leq e^{C_\psi}
+\end{equation}
+
+Como el potencial $\psi$ está normalizado, $p(\psi)=0$.
+Esto implica que la medida toma la forma 
+
+\begin{equation}
+    \mu_\psi([\omega]^n_0) ==\frac{e^{\sum^n_{k=0}\psi(T^k\omega)}}{Z_\psi^{n+1}(\omega)}
+\end{equation}
+
+donde $Z_\psi^{n+1}(\omega)$ es análoga a la función de partición aunque en este caso depende de $\omega$
+
+\nocite{keane_strongly_1972,ledrappier_principe_1974,johansson_square_2003,cessac_discrete_2010}
