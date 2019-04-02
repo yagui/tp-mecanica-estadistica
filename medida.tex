@@ -55,7 +55,7 @@ c) Una $g$-función es continua si
 \paragraph{Proposición 7} La función $g_0(\omega)$ es no nula.
 
 Demostración: Suponemos que existe $\omega \in \Omega$ tal que $g_0(w)=\prob{\omega(0)|\uom}=0$, entonces existe una neurona (o un sitio) para la cual $\Pif = 0$ ó $1$ (ver ecuación \eqref{eqn:gof}).
-Para que esto se cumpla tendría que suceder que $C_i(\uom) = \pm \infty$ ó que $\sigma_i(\uom) = 0$. Pero estas magnitudes están acotadas según \eqref{eqn:cotaC} y \eqref{eqn:cotaS} por lo tanto $g_0(\omega) > 0 \ \forall \ \omega$
+Para que esto se cumpla tendría que suceder que $C_i(\uom) = \pm \infty$ ó que $\sigma_i(\uom) = 0$. Pero estas magnitudes están acotadas según \eqref{eqn:cotaCi} por lo tanto $g_0(\omega) > 0 \ \forall \ \omega$
 
 
 \paragraph{Proposición 8} $g_0(\omega)$ es continua.
@@ -214,7 +214,7 @@ Aplicando la propiedad \eqref{eqn:desigtriangconproductoria}
     &\leq \frac{\sqrt{1-\gamma^2}}{\sigma_B \left(1-\gamma^{2k}\right)} 
     \left[ \abs{ C_i - C_i' } + \sum_{n=1}^{\infty} f_n \gamma^{2kn} \left( \abs{C_i} + \abs{C_i'} \right) \right]
     \end{align*}
-donde consideramos que $\gamma^{-2\tau_i}$ y $\gamma^{-2\tau_i'}$ son ambos menores que $\gamma^{2k}$. También, si acotamos $\abs{C_i}$ y $\abs{C_i'}$ por medio de \eqref{eqn:cotasC} obtenemos
+donde consideramos que $\gamma^{-2\tau_i}$ y $\gamma^{-2\tau_i'}$ son ambos menores que $\gamma^{2k}$. También, si acotamos $\abs{C_i}$ y $\abs{C_i'}$ por medio de \eqref{eqn:cotaCi} obtenemos
 \begin{equation}
     \abs {\frac{C_i}{\sigma_i} - \frac{C_i'}{\sigma_i'}}
      \leq \frac{\sqrt{1-\gamma^2}}{\sigma_B \left(1-\gamma^{2k}\right)} 
@@ -222,7 +222,7 @@ donde consideramos que $\gamma^{-2\tau_i}$ y $\gamma^{-2\tau_i'}$ son ambos meno
     \label{eqn:diffcispond}
 \end{equation}
 
-Utilizando la definición de $C_i$ y $C_i'$ \eqref{eqn:ci} tenemos:
+Utilizando la definición de $C_i$ y $C_i'$ \eqref{eqn:Cib} tenemos:
 \begin{align}
 \nonumber \abs{ C_i - C_i' } &= 
 \abs{ \sum_{j=1}^N W_{ij} \left( \sum_{l=\tau_i}^{-1}\gamma^{-l-1} \omega_j(l) -\sum_{l=\tau_i'}^{-1} \gamma^{-l-1} \omega_j'(l) \right) + \frac{I_i}{1-\gamma} \left(\gamma^{-\tau_i} - \gamma^{-\tau_i'} \right) }\\
@@ -357,7 +357,7 @@ Recordando que:
          \frac{\theta - C_i(\uom)} {\sigma_i(\uom)}
 \end{align*}
 
-Como $C_i(\omega_{-\infty}^t)$ y $\sigma_i^2(\omega_{-\infty}^t)$ están acotadas según \eqref{eqn:cotaC} y \eqref{eqn:cotaSigma} respectivamente se obtiene
+Como $C_i(\omega_{-\infty}^t)$ y $\sigma_i^2(\omega_{-\infty}^t)$ están acotadas según \eqref{eqn:cotaCi} y \eqref{eqn:cotaSigma} respectivamente se obtiene
 
 \begin{equation}
     \theta - C_i^+ \leq \theta - C_i(\uom) \leq \theta - C_i^- \Longrightarrow

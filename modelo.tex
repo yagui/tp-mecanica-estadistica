@@ -460,7 +460,7 @@ Entonces, para ambos casos la esperanza condicional de $V(_it+1)$ dado $\omega_{
     \sum_{j=1}^N W_{ij} X_{ij}(\omega_{-\infty}^t) + I_i \frac{1-\gamma^{t-\tau_i(\omega_{-\infty}^t)+1}}{1-\gamma}
 \end{equation}
 
-Por otro lado, la varianza de $V_t(t+1)$ depende de $\xi(\omega_{-\infty}^t)$. En el caso en que $\tau_i(\omega_{-\infty}^t)$ es finito, tenemos que
+Por otro lado, la varianza de $V_i(t+1)$ depende de $\xi(\omega_{-\infty}^t)$. En el caso en que $\tau_i(\omega_{-\infty}^t)$ es finito, tenemos que
 \begin{equation*}
     \var{\xi_i(\omega_{-\infty}^t)} = \sum_{l=\tau_i(\omega_{-\infty}^t)}^t \left(\gamma^{t-l}\right)^2 \underbrace{\var{B_i(l)}}_{=1} = \frac{1-\gamma^{2(t+1-\tau_i(\omega_{-\infty}^t))}}{1-\gamma^2}
 \end{equation*}
@@ -475,9 +475,15 @@ Fijado $\omega_{-\infty}^t$, $V_i(t+1)$ y $V_j(t+1)$ son condicionalmente indepe
     \var{V_i(t+1) | \omega_{-\infty}^t} = \var{C_i(\omega_{-\infty}^t) + \sigma_B \  \xi_i(\omega_{-\infty}^t)} = \var{C_i(\omega_{-\infty}^t)} + \var{ \sigma_B \  \xi_i(\omega_{-\infty}^t)} 
 \end{equation}
 \begin{equation}
-    \var{V_i(t+1) | \omega_{-\infty}^t} = \sigma_B^2 \frac{1-\gamma^{2(t-\tau_i(\omega_{-\infty}^t)+2)}}{1-\gamma^2}
+    \var{V_i(t+1) | \omega_{-\infty}^t} = \sigma_i^2(\omega_{-\infty}^t) = \sigma_B^2 \frac{1-\gamma^{2(t-\tau_i(\omega_{-\infty}^t)+2)}}{1-\gamma^2}
+    \label{eqn:sigma2}
 \end{equation}
-
+con desvío estandar
+\begin{equation}
+    \sigma_i(\omega_{-\infty}^t) = \sigma_B \sqrt{\frac{1-\gamma^{2(t-\tau_i(\omega_{-\infty}^t)+2)}}{1-\gamma^2}}
+    \label{eqn:sigmai}
+\end{equation}
+y covarianza entre los potenciales de acción de dos neuronas $i$ y $j$
 \begin{equation}
     \cov{V_i(t+1),V_j(t+1) | \omega_{-\infty}^t} = \sigma_i^2(\omega_{-\infty}^t) \delta_{ij} = \sigma_B^2 \frac{1-\gamma^{2(t-\tau_i(\omega_{-\infty}^t)+2)}}{1-\gamma^2} \delta_{ij}
 \end{equation}
@@ -513,8 +519,9 @@ Entonces, $X_{ij}(\omega_{-\infty}^t)$ está acotado según
 Ahora analizamos las cotas para $C_i(\omega_{-\infty}^t)$. Según la ecuación \eqref{eqn:Ci}, 
 \begin{equation}
      C_i(\omega_{-\infty}^t) = \sum_{j=1}^N W_{ij} X_{ij}(\omega_{-\infty}^t) + I_i \frac{1-\gamma^{t+1-\tau_i(\omega_{-\infty}^t) }}{1-\gamma}
+     \label{eqn:Cib}
 \end{equation}
-Para hallar cotas mínimas y máximas, analizaremos ambos términos de la expresión por separado. El mínimo en el primer término lo hallaremos en el caso en que $X_{ij}$ es máximo cuando $W_{ij}$ es negativo, y $X_{ij}$ es mínimo cuando $W_{ij}$ es positivo (o cero). En foma análoga podemos hallar el máximo para el primer término
+Para hallar cotas mínimas y máximas, analizaremos ambos términos de la expresión por separado. El mínimo en el primer término lo hallaremos en el caso en que $X_{ij}$ es máximo para todos los $j$ tal que $W_{ij}$ es negativo, y $X_{ij}$ es mínimo cuando para todos los $j$ donde $W_{ij}$ es positivo (o cero). En forma análoga podemos hallar el máximo de está expresión
 
 \begin{equation}
      \underbrace{\frac{1}{1-\gamma}\sum_{j=1, W_{ij}<0}^N W_{ij}}_{X_{ij}(\omega_{-\infty}^t) = \left\{ \begin{array}{ccc}
@@ -524,11 +531,47 @@ Para hallar cotas mínimas y máximas, analizaremos ambos términos de la expres
          \frac{1}{1-\gamma} & \text{si} & W_{ij} > 0 \\
          0 & \text{si} & W_{ij} \leq 0
      \end{array} \right.}
+     \label{eqn:cotasum}
 \end{equation}
 
+Para analizar el segundo término de $C_i(\omega_{-\infty}^t)$ (ecuación \eqref{eqn:Cib}) vamos a asumir que $I_i > 0$
 
+\begin{equation}
+     \underbrace{I_i}_{\tau_i(\omega_{-\infty}^{t-1})=t} \leq
+     I_i = \frac{1-\gamma^{t-\tau_i(\omega_{-\infty}^t)+1}}{1-\gamma} \leq
+     \underbrace{I_i \frac{1}{1-\gamma}}_{\tau_i(\omega_{-\infty}^{t-1})=-\infty}
+     \label{eqn:cotaIi}
+\end{equation}
+
+Entonces, juntando las ecuaciones \eqref{eqn:cotasum} y \eqref{eqn:cotaIi} hallamos las cotas mínimas y máximas (una para cada neurona $i$) de $C_i(\omega_{-\infty}^t)$, las cuales llamaremos $C_i^-$ y $C_i^+$ respectivamente
+\begin{equation}
+     C_i^- :=  \frac{1}{1-\gamma}\sum_{j=1, W_{ij}<0}^N W_{ij} + I_i 
+     \leq C_i(\omega_{-\infty}^t) \leq
+     \frac{1}{1-\gamma} \left( \sum_{j=1, W_{ij}>0}^N W_{ij} + I_i \right)
+     \label{eqn:cotaCi}
+\end{equation}
+
+Finalmente, a partir de la ecuación \eqref{eqn:sigma2} buscamos las cotas para $\sigma_i^2(\omega_{-\infty}^t)$.
+\begin{equation}
+     \underbrace{\sigma_B^2}_{\tau_i(\omega_{-\infty}^{t-1})=t} \leq
+     \sigma_i^2(\omega_{-\infty}^t) \leq
+     \underbrace{\sigma_B^2 \frac{1}{1-\gamma}}_{\tau_i(\omega_{-\infty}^{t-1})=-\infty}
+     \label{eqn:cotaSigma2}
+\end{equation}
+y consecuentemente
+\begin{equation}
+     \underbrace{\sigma_B}_{\tau_i(\omega_{-\infty}^{t-1})=t} \leq
+     \sigma_i(\omega_{-\infty}^t) \leq
+     \underbrace{\sigma_B \sqrt{\frac{1}{1-\gamma}}}_{\tau_i(\omega_{-\infty}^{t-1})=-\infty}
+     \label{eqn:cotaSigma}
+\end{equation}
+
+\subsection{Probabilidad del patrón de disparos}
 
 \paragraph{Proposición 5.}
+
+
+
 
 \begin{proof}[\bf{Demostración de la Proposición 5.}]
 \end{proof}
@@ -569,7 +612,7 @@ A continuación desarrollamos $C_i$ (ver ecuación \eqref{eqn:Ci})
     &= \sum_{j=1}^N W_{ij} X_{ij}(a_{-\infty}^{-1}) + I_i \frac{1-\gamma^{t-\tau_i(a_{-\infty}^{-1})}}{1-\gamma} = C_i(a_{-\infty}^{-1})
 \end{align}
 
-Finalmente desarrollamos $\sigma_i^2$ (ver ecuación \eqref{eqn:sigma})
+Finalmente desarrollamos $\sigma_i^2$ (ver ecuación \eqref{eqn:sigmai})
 \begin{equation}
   \sigma_i(\omega_{-\infty}^{t-1})= \sigma_B^2 \frac{1-\gamma^{2(t-\tau_i(\omega_{-\infty}^{t-1}))}}{1-\gamma^2} = \sigma_B^2 \frac{1-\gamma^{-2 \tau_i(a_{-\infty}^{-1})}}{1-\gamma^2} = \sigma_i^2(a_{-\infty}^{-1})
 \end{equation}
