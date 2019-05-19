@@ -110,7 +110,10 @@ Sea $P = \mathcal{N}(0,1)^{N \times \enteros}$ la distribución de probabilidad 
 Dado el par $(s,t)$, los cilindros con base $[\omega_s^t]=\mathcal{C}(\omega_s^t)$ forman una base de la $\sigma$-álgebra en $\mathcal{A}^{\enteros}$.
 Primero analizaremos la distribución de probabilidad de $V(t+1)$ condicionada a $\omega_s^t=Z(V_s^t)$ y una condición inicial $V(s)$ que consideraremos acotada.
 
-\paragraph{Proposición 1.} Para cada par (s,t), condicionado a la secuencia de disparos  $Z(V_s^t)=\omega_s^t$, es decir conocemos qué neuronas dispararon y cuándo lo hicieron, en el intervalo $[s,t]$ y, dado $V(s)$ el potencial en el instante inicial, tenemos que el potencial de membrana en el instante $t+1$ es:
+\begin{prop}
+\label{prop:modeloreducido}
+Para cada par (s,t), condicionado a la secuencia de disparos  $Z(V_s^t)=\omega_s^t$, es decir conocemos qué neuronas dispararon y cuándo lo hicieron, en el intervalo $[s,t]$ y, dado $V(s)$ el potencial en el instante inicial, tenemos que el potencial de membrana en el instante $t+1$ es:
+
 \begin{equation}
     V(t+1) = \left\{ \begin{array}{ll}
         \gamma^{t+1-s} V(s) + C_i(\omega_s^t) + \sigma_B \  \xi_i(\omega_s^t)   & \text{si la neurona } i \text{ no disparó entre } s \text{ y } t\\ 
@@ -129,10 +132,11 @@ donde
 \begin{equation}
     \xi_i(\omega_s^t) = \sum_{l=\tau_i(\omega_s^t)}^t \gamma^{t-l} B_i(l)
 \end{equation}
+\end{prop}
 
 Esta proposición indica que la neurona pierde la memoria cuando dispara, o sea, la neurona vuelve a una estado basal de potencial de membrana y sólo los estados activos del resto de las neuronas de la red contribuyen al incremento de su potencial. 
 
-\begin{proof}[\bf{Demostración de la Proposición 1}]
+\begin{proof}[\bf{Demostración de la Proposición \ref{prop:modeloreducido}}]
 Primero analizaremos el caso simple en el cual no hay disparos de ninguna neurona entre los tiempos $s$ y $t$, es decir, $\tau_i(\omega_s^t)=s$ y $\omega_i(k)=0, \forall k \in [s,t]$. En esta condición el término $(1-\omega_i(k))$ es siempre $1$. Ademas no consideramos el factor estocástico $B_i$. Partimos de las ecuaciones \eqref{eqn:dinamica1} y \eqref{eqn:dinamica2} para determinar el potencial de membrana de la neurona $i$
 \begin{align*}
     V_i(s+1) &= \gamma V_i(s)(1-\omega_i(s)) +I_i = \gamma V_i(s) +I_i\\
@@ -151,7 +155,7 @@ Continuando con la sucesión, si evaluamos en el instante $s + (t+1-s)$ tenemos 
 
 Si hubo uno o más disparos de la neurona $i$ entre los tiempos $s$ y $t$, siendo el último en el instante $k$ tenemos que: $\tau_i(\omega_s^t)=k$, $\omega_i(k)=1$ y $\omega_i(k+1)=0,...,\omega_i(t)=0$, donde tendremos que $(1-\omega_i(k))=0$. Entonces, más allá de lo que suceda entre los instantes $s$ y $k$, podemos calcular el potencial en $k+1$, a partir de las ecuaciones \eqref{eqn:dinamica1} y \eqref{eqn:dinamica2}, como:
 \begin{equation*}
-    V_i(k+1) &= \gamma V_i(k)(1-\omega_i(k)) + I_i = I_1 \\
+    V_i(k+1) = \gamma V_i(k)(1-\omega_i(k)) + I_i = I_1 \\
 \end{equation*}
 donde hemos aplicado que $1-\omega_i(k)=0$. A partir de este último disparo, sabiendo que ya no hay un nuevo disparo entre $k+1$ y $t$, podemos calcular el potencial en los siguientes instantes como: 
 \begin{align*}
@@ -212,8 +216,8 @@ Como los $B_i(t)$ son independiente con idéntica distribución (\emph{i.i.d.}),
 \label{eqn:xi1}
 \end{equation}
 
-\paragraph{Proposición 2.}
-Para cada par $(s,t)$, condicionado a $Z(V_s^t)=\omega_s^t$ la secuncia de disparos y $V(s)$ la condición inicial, con $P$ la distribución de probabilidad conjunta de $B_i(k)$, $k \in \mathbb{Z}$ y $V(t+1)$ con distribución gaussiana, la esperanza condicional del potencial de membrana y la matriz de covarianza son:
+\begin{prop}\label{prop:esperanzareducida}
+Para cada par $(s,t)$, condicionado a $Z(V_s^t)=\omega_s^t$ la secuencia de disparos y $V(s)$ la condición inicial, con $P$ la distribución de probabilidad conjunta de $B_i(k)$, $k \in \mathbb{Z}$ y $V(t+1)$ con distribución gaussiana, la esperanza condicional del potencial de membrana y la matriz de covarianza son:
 \begin{equation}
     \esperanza{V_i(t+1)|\omega_s^t, V(s)} = \left\{ \begin{array}{cl}
                         \gamma^{t+1-s} V_i(s) + C_i(\omega_s^t)   & \text{si la neurona $i$ no disparó entre $s$ y $t$.}\\ 
@@ -231,8 +235,9 @@ Para cada par $(s,t)$, condicionado a $Z(V_s^t)=\omega_s^t$ la secuncia de dispa
                          0    & \text{si } i\neq j
                     \end{array}\right.
 \end{equation}
+\end{prop}
 
-\begin{proof}[\bf{Demostración de la Proposición 2}]
+\begin{proof}[\bf{Demostración de la Proposición \ref{prop:esperanzareducida}}]
 Podemos calcular la esperanza y la varianza de $\xi_i(\omega_s^t)$ a partir de la ecuación \eqref{eqn:xi1}:
 \begin{equation*}
     \esperanza{\xi_i(\omega_s^t)} = \sum_{l=\tau_i(\omega_s^t)}^t \gamma^{t-l} \  \underbrace{\esperanza{B_i(l)}}_{=0}=0
@@ -324,13 +329,14 @@ con
 \end{equation}
 
 
-\paragraph{Proposición 3.}
+\begin{prop}\label{prop:disparo}
 Existe una probabilidad, distinta de cero, de que la neurona $i$ NO dispare, acotada por
 \begin{equation}
     0 < \left( \Pi_- \right)^{t-s} < \prob{ \bigcap_{n=s}^t \{V_i(n) < \theta \} }  < \left( \Pi_+ \right)^{t-s} < 1
 \end{equation}
+\end{prop}
 
-\begin{proof}[\bf{Demostración de la Proposición 3.}]
+\begin{proof}[\bf{Demostración de la Proposición \ref{prop:disparo}}]
 Partimos de la ecuación \eqref{eqn:probdisparo}
 
 \begin{equation*}
@@ -380,8 +386,8 @@ Redefinimos $\tau_i(\omega_{-\infty}^t)$ como:
     \right.
 \end{equation}
 
-\paragraph{Proposición 4.}
-Extendemos la proposición 2 cuando $s \rightarrow-\infty$. $V(t+1)$ condicionado a $\omega_{-\infty}^t$ es gaussiana con media
+\begin{prop}\label{prop:modelo}
+Extendemos la proposición \ref{prop:esperanzareducida} cuando $s \rightarrow-\infty$. $V(t+1)$ condicionado a $\omega_{-\infty}^t$ es gaussiana con media
 \begin{equation}
     \esperanza{V_i(t+1) | \omega_{-\infty}^t} = C_i(\omega_{-\infty}^t) =
     \sum_{j=1}^N W_{ij} X_{ij}(\omega_{-\infty}^t) + I_i \frac{1-\gamma^{t-\tau_i(\omega_{-\infty}^t)+1}}{1-\gamma}
@@ -396,8 +402,8 @@ y covarianza
     \cov{V_i(t+1),V_j(t+1) | \omega_{-\infty}^t} = \sigma_i^2(\omega_{-\infty}^t) \delta_{ij} = \sigma_B^2 \frac{1-\gamma^{2(t-\tau_i(\omega_{-\infty}^t)+2)}}{1-\gamma^2} \delta_{ij}
 \end{equation}
 con $V_i(t+1)$ para $i=\{1,...,N\}$ condicionalmente independientes.
-
-\begin{proof}[\bf{Demostración de la Proposición 4.}]
+\end{prop}
+\begin{proof}[\bf{Demostración de la Proposición \ref{prop:modelo}}]
 Partimos de la expresión \eqref{eqn:potencialCompacto} donde extendemos $s$ a $-\infty$. Como $V(s)$ es acotado el término asociado a la condición inicial tiende a cero, por lo cual nos queda:
 \begin{equation}
   V_i(t+1) = C_i(\omega_{-\infty}^t) + \sigma_B \  \xi_i(\omega_{-\infty}^t)
@@ -568,28 +574,63 @@ y consecuentemente
 
 \subsection{Probabilidad del patrón de disparos}
 
-\paragraph{Proposición 5.}
+\begin{prop}\label{prop:probpatron}
+La probabilidad de obtener el patrón de disparos en el instante $t+1$, dado un determinado pasado es
+
+\begin{equation}
+    \prob{\omega(t+1) | \omega^t_{-\infty}}=\prod_{i=1}^N \prob{\omega_i(t+1)|\omega_{-\infty}^t}
+\end{equation}
+con
+\begin{equation}
+    \prob{\omega_i(t+1)|\omega_{-\infty}^t} = 
+\end{equation}
+\end{prop}
+
+\begin{proof}[\bf{Demostración de la Proposición \ref{prop:probpatron}}]
+\begin{equation}
+  \prob{\omega(t+1) | \omega^t_{-\infty}}=\prob{\omega_1(t+1) \bigcap \omega_2(t+1) \bigcap \ldots \bigcap \omega_N(t+1) | \omega^t_{-\infty}}
+\end{equation}
+
+\begin{equation}
+  \prob{\omega(t+1) | \omega^t_{-\infty}}=\prob{\omega_1(t+1) | \omega^t_{-\infty}} \bigcap \prob{\omega_2(t+1) | \omega^t_{-\infty}} \bigcap \ldots \bigcap \prob{\omega_N(t+1) | \omega^t_{-\infty}}
+\end{equation}
+
+\begin{equation}
+  \prob{\omega(t+1) | \omega^t_{-\infty}}=\prob{\omega_1(t+1) | \omega^t_{-\infty}} \bigcap \prob{\omega_2(t+1) | \omega^t_{-\infty}} \bigcap \ldots \bigcap \prob{\omega_N(t+1) | \omega^t_{-\infty}}
+\end{equation}
+
+\begin{equation}
+  \prob{\omega_i(t+1) | \omega^t_{-\infty}}=\omega_i(t+1) \prob{V_i(t+1) \geq \theta | \omega^t_{-\infty}} +
+    (1-\omega_i(t+1)) \prob{V_i(t+1) < \theta | \omega^t_{-\infty}}
+\end{equation}
 
 
+\begin{equation}
+  \prob{\omega_i(t+1) | \omega^t_{-\infty}}=\omega_i(t+1) \Pi\left(\frac{\theta-x_o-\mu}{\sigma}\right) +
+    (1-\omega_i(t+1)) \left( 1-\Pi\left(\frac{\theta-x_o-\mu}{\sigma}\right) \right)
+\end{equation}
 
+observación
+\begin{equation}
+  \prob{\omega_i(t+1) | \omega^t_{-\infty}}=\prob{\omega_i(t+1) | \omega^t_{\tau_i(\omega^t_{-\infty})}}
+\end{equation}
 
-\begin{proof}[\bf{Demostración de la Proposición 5.}]
 \end{proof}
-
-
-
 
 
 
 \subsection{Estacionariedad}
 
-\paragraph{Proposición 6} Fijamos una secuencia $a_{-\infty}^0$, $a(-n) \in \mathcal{A}, n\geq 0 \ \forall \ t$
+\begin{prop}\label{prop:estacionariedad}
+Fijamos una secuencia $a_{-\infty}^0$, $a(-n) \in \mathcal{A}, n\geq 0 \ \forall \ t$
 \begin{equation}
     \prob{\omega(t)=a(0) | \omega_{-\infty}^{t-1}=a_{-\infty}^{-1})} = 
     \prob{(\omega(0)=a(0) | \omega_{-\infty}^{-1}=a_{-\infty}^{-1})} = 
     \prob{(\omega(1)=a(0) | \omega_{-\infty}^{0}=a_{-\infty}^{-1})}
 \end{equation}
+\end{prop}
 
+\begin{proof}[\bf{Demostración de la Propiedad \ref{prop:estacionariedad}}]
 Para llegar a este resultado primero desarrollamos $X_{ij}$ (ver ecuación \eqref{eqn:Xij})
 \begin{equation*}
     X_{ij}(\omega_{-\infty}^{t-1}) = \sum_{l=\tau_i(\omega_{-\infty}^{t-1})}^{t-1} \gamma^{t-1-l} \omega_j(l)
@@ -626,3 +667,4 @@ Es importante notar que estas propiedades se cumplen sólo porque $W_{ij}$, $\ga
 \end{align}
 
 Por lo cual podemos decir que es un proceso estacionario.
+\end{proof}

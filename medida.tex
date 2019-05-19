@@ -130,7 +130,7 @@ Recordando la expresión de la función $\Pi(x)$
 
 Entonces $\norm{\Pi'}_{\infty} = 1/\sqrt{2 \pi}$
 
-Aplicando la propiedad \eqref{eqn:derivadavelocidad}
+Aplicando la propiedad \ref{prop:5} (ecuación \eqref{eqn:prop5})
 \begin{equation}
     \abs{\Pi(y_i) - \Pi(y_i')} \leq \abs{y_i - y_i'} \norm{\Pi'}_{\infty} = \abs{y_i - y_i'} \frac{1}{\sqrt{2 \pi}}
     \label{eqn:derivada}
@@ -375,11 +375,8 @@ Tomamos
 \begin{equation*}
     b= \max_{i\in\{1,...,N\}} \left\{\frac{\theta - C_i^-}{\sigma_B} \right\}
 \end{equation*}
-\begin{equation*}
-    \norm{f}_{[a,b]} = \sup_{x\in[a,b]} \left\{ \abs{f(x)}\right\}
-\end{equation*}
 
-Recordando la propiedad \eqref{eqn:velocidad} tomamos:
+Recordando la propiedad \eqref{eqn:derivadavelocidad2} tomamos:
 
 \begin{equation}
     \abs{\log \frac{\Pi(y_i)}{\Pi(y_i')}} = \abs{\log \Pi(y_i)  -\log \Pi(y_i')} \leq \abs{y_i-y_i'} \norm{\left(\log \Pi(x)\right)'}_{[a,b]}
@@ -406,10 +403,10 @@ Por propiedad de la función $\Pi(x)$, tal que $1-\Pi(x)=\Pi(-x)$ tenemos tambi�
 Entonces, reemplazando en la ecuación \eqref{eqn:varlog1}
 \begin{align*}
   var_k[\log(g_o(\omega))] & \leq \sum_{i=1}^N \sup_{\omega,\omega' \in \Omega} \left\{  \abs{ \left[ \log\left(\frac{\Pi(y_i)}{\Pi(y_i')}\right) - \log\left(\frac{1-\Pi(y_i)}{1-\Pi(y_i')}\right) \right]} \right\} \\
-  & \leq \sum_{i=1}^N 2 \Upsilon \sup_{\omega,\omega' \in \Omega} \left\{  \abs{y_i-Y_i'} \right\} = 2 \Upsilon  \sum_{i=1}^N \sup_{\omega,\omega' \in \Omega} \left\{  \abs{y_i-y_i'} \right\}
+  & \leq \sum_{i=1}^N 2 \Upsilon \sup_{\omega,\omega' \in \Omega} \left\{  \abs{y_i-y_i'} \right\} = 2 \Upsilon  \sum_{i=1}^N \sup_{\omega,\omega' \in \Omega} \left\{  \abs{y_i-y_i'} \right\}
 \end{align*}
 
-Recordando la ecuación \eqref{eqn:supys} podemos decir que $var_k[\log(g_o(\omega))] \leq K' \gamma^k$ con $K'=2 \sqrt{2 \pi} \Upsilon$
+Recordando la ecuación \eqref{eqn:diffys2} podemos decir que $var_k[\log(g_o(\omega))] \leq K' \gamma^k$ con $K'=2 \sqrt{2 \pi} \Upsilon$
 
 Además,
 \begin{equation*}

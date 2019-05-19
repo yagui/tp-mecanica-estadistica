@@ -89,3 +89,54 @@ Como $A$ y $B$ pueden ser mayores que 1 (en módulo), no se puede aplicar direct
     \abs{A \sqrt{1-u} - B \sqrt{1-v} } \leq \abs{A-B} + \sum_{n=1}^{\infty} f_n \left(\abs{A} u^n + \abs{B} v^n\right)
     \label{eqn:desigtriangconproductoria3}
 \end{equation}
+
+
+
+\paragraph{Propiedad 4} Dada una función $f(x): \reals \to \reals$, con derivada $f'(x)$ acotada en el intervalo $[a,b]$
+
+\begin{equation}
+    \abs{f(b) - f(a)} \leq \abs{b-a}\cdot \norm{f'(x)}_{[a,b]}
+    \label{eqn:derivadavelocidad2}
+\end{equation}
+con
+\begin{equation}
+    \norm{h(x)}_{[a,b]} := \sup_{x\in[a,b]}   \left\{ \abs{h(x)} \right\}
+    \label{eqn:nomab}
+\end{equation}
+
+\begin{proof}[\bf{Demostración de la Propiedad 4}]
+Aplicamos la desigualdad triangular
+\begin{equation}
+    \abs{\int_a^b f'(x) dx} \leq \int_a^b \abs{f'(x)} \abs{dx} \leq \norm{f'(x)}_{[a,b]}\int_a^b\abs{dx}
+    \label{eqn:prop4}
+\end{equation}
+
+\begin{equation}
+    \abs{f(b) - f(a)} \leq \abs{b-a} \norm{f'(x)}_{[a,b]}
+\end{equation}
+
+
+\end{proof}
+\label{prop:5}
+\paragraph{Propiedad 5} Dada una función $f(x):\reals \to \reals$ con derivada $f'(x)$ acotada para todo $x$
+
+\begin{equation}
+    \abs{f(b) - f(a)} \leq \abs{b-a}\cdot \norm{f'(x)}_{\infty}
+    \label{eqn:prop5}
+\end{equation}
+
+\begin{proof}[\bf{Demostración de la Propiedad 5}]
+Si consideramos ahora que $f'(x)$ está acotada en todo los reales, podemos calcular $\norm{f'(x)}_{\infty}$
+
+\begin{equation}
+   \norm{f'(x)}_{[a,b]} := \sup_{x\in[a,b]}   \left\{ \abs{f'(x)} \right\} \leq \sup_{x\in\reals}  \left\{ \abs{f'(x)} \right\} =: \norm{f'(x)}_{\infty}
+\end{equation}
+
+Por lo tanto, a partir de la Propiedad 4, podemos afirmar que
+
+\begin{equation}
+    \abs{f(b) - f(a)} \leq \abs{b-a} \norm{f'(x)}_{[a,b]} \leq \norm{f'(x)}_{\infty}
+\end{equation}
+
+
+\end{proof}
